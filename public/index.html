@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing 123</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine">
+    <style>
+      body {
+        font-family: 'Tangerine', serif;
+        font-size: 48px;
+        background-color: whitesmoke;
+      }
+      #data {
+          background-color: whitesmoke;
+          border-radius: 10px;
+      }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="color: crimson;">Gift Wish List</h1>
+        <form action="" method="post">
+            <input type="text" id="datainput" name="phone" placeholder="Phone Number">
+            <input type="text" id="datainput" name="email" placeholder="Email">
+            <input type="text" id="datainput" name="company" placeholder="Company">
+            <input type="text" id="datainput" name="lastName" placeholder="Last Name">
+            <input type="text" id="datainput" name="firstName" placeholder="First Name">
+            <button type="submit" id="submitbutton">Submit</button>
+            <hr>
+            <button id="loadlist">Load List</button>
+            <table>
+                <tr>
+                    <td>
+                        <h4>
+                            <div id="data"></div>
+                        </h4>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    
+    <script src="app.js"></script>
+</body>
+</html>
