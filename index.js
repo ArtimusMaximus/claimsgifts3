@@ -28,6 +28,10 @@ app.use(express.static('public'))
 router.get('/', (req, res) => {
     res.sendFile('index.html')
 })
+// router.post('/', (req, res) => {
+//     res.sendFile('index.html')
+// })
+
 
 app.get('/', (req, res) => 
     res.send(`Node & Express running on PORT ${PORT}.`)
@@ -35,8 +39,10 @@ app.get('/', (req, res) =>
 
 
 app.post('/', (req, res) => {
-    res.send('????????')
+    
+    res.send('app dot post used')
 })
+
 
 app.listen(PORT, () => 
     console.log(`Your server is running on PORT ${PORT}.`)

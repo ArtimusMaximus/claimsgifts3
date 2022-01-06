@@ -13,15 +13,15 @@ export const ContactSchema = new Schema({
     },
     email: {
         type: String,
-        required: 'Enter an email'
+        //required: 'Enter an email'
     },
     company: {
         type:  String,
-        required: 'Company'
+        //required: 'Company'
     },
     phone: {
         type: Number,
-        required: ''
+        //required: ''
     },
     created_date: {
         type: Date,
