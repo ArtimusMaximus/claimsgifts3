@@ -17,7 +17,7 @@ window.addEventListener("load", () => {
     fetchList();
     
 
-    
+    const idArray = [];
     const giftArray = [];
     const linkArray = [];
     const appendData = data => {
@@ -30,6 +30,7 @@ window.addEventListener("load", () => {
             let giftLink = data[i].lastName
             linkArray.push(giftLink)
             let id = data[i]._id
+            idArray.push(id)
             p.innerHTML = `${gift} <a href="${giftLink}">${giftLink}</a>`
             btn.innerHTML = "Remove Gift"
             container.appendChild(p)
@@ -44,11 +45,58 @@ window.addEventListener("load", () => {
                 console.log('del complete')
                 container.removeChild(p)
                 container.removeChild(btn)
-                
             });
 
+            
+
         }
-        
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const dataDiv = document.getElementById('data')
+        const submitButton = document.getElementById('submitbutton')
+        submitButton.addEventListener('click', () => {
+            let firstName = document.getElementById("datainput1").value
+            let lastName = document.getElementById("datainput2").value
+            const raw = JSON.stringify({firstName, lastName})
+            submitButton.onclick = document.getElementById('datainput1').value = ""
+            submitButton.onclick = document.getElementById('datainput2').value = ""
+            console.log('raw', raw)
+
+            fetch('/contact', {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                // redirect: 'follow'
+            })
+            .then((response) => { 
+                return response.json()
+            })
+            .then(result => {
+                if(firstName === '' || lastName === ''){
+                    return alert('Enter value both')
+                }
+                const id = result._id
+                const p = document.createElement('P')
+                const btn = document.createElement('button')
+                p.innerHTML = `${result.firstName} <a href="${result.lastName}">${result.lastName}</a>`
+                btn.innerHTML = 'Remove Gift'
+                dataDiv.appendChild(p)
+                dataDiv.appendChild(btn)
+                console.log('this is the result', result)
+
+                btn.addEventListener('click', () => {
+                    
+                    fetch(`/contact/${id}`, {
+                        method: 'DELETE'
+                    })
+                    dataDiv.removeChild(p)
+                    dataDiv.removeChild(btn)
+
+                })
+                
+            }).catch(err => console.log(err))
+        })
         
         // const toggleList = () => {
         //     const container = document.getElementById('tableofdata')
@@ -67,22 +115,8 @@ window.addEventListener("load", () => {
     console.log(giftArray, linkArray)
 
 
-    //this checks if form data is entered
-    const subButton = document.getElementById("submitbutton")
-    subButton.addEventListener("click", () => {
-        let dataInput1 = document.getElementById("datainput1").value
-        let dataInput2 = document.getElementById("datainput2").value
-
-        if(dataInput2 === '' || datainput1 === ''){
-            return alert('you must enter a value')
-        }
-         
-        console.log(dataInput1, dataInput2)
-        console.log('successful post button click')
-        // let subform = document.getElementById('subform')
-        // subform.reset()
-        
-    });
+    
+    
 
         // loadList.style.display = 'none'
         // const buttonDiv = document.getElementById('buttondiv')
@@ -95,6 +129,23 @@ window.addEventListener("load", () => {
         // }
 
 })
+//this checks if form data is entered
+const subButton = document.getElementById("submitbutton")
+    subButton.addEventListener("click", () => {
+        let dataInput1 = document.getElementById("datainput1").value
+        let dataInput2 = document.getElementById("datainput2").value
+
+        // if(dataInput2 === '' || datainput1 === ''){
+        //     return alert('You must enter a value in both fields.')
+        // }
+         
+        console.log(dataInput1, dataInput2)
+        console.log('successful post button click')
+        // let subform = document.getElementById('subform')
+        // subform.reset()
+        
+        
+    });
 
 
 

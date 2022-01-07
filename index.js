@@ -38,8 +38,8 @@ app.get('/', (req, res) =>
 );
 
 
-app.post('/', (req, res) => {
-    
+app.post('/contact', (req, res) => {
+    console.log(req.body)
     res.send('app dot post used')
 })
 
