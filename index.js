@@ -3,6 +3,7 @@ import routes from './src/routes/crmRoutes';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import res from 'express/lib/response';
+import Swal from 'sweetalert2'
 
 const app = express();
 const PORT = 4000;
