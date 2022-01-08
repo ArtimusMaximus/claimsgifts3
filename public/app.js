@@ -21,22 +21,39 @@ window.addEventListener("load", () => {
     const giftArray = [];
     const linkArray = [];
     const appendData = data => {
-        const container = document.getElementById('data')
+        const dataDiv = document.getElementById('data')
         for(let i = 0; i < data.length; i++){
             let p = document.createElement('P')
             p.className = "giftp"
             let btn = document.createElement('button')
+            let btn2 = document.createElement('button')
+            let btn3 = document.createElement('button')
+            btn3.className = "btn btn-outline-danger"
+            btn2.className = "btn btn-outline-danger"
             btn.className = "btn btn-outline-danger btn-large"
+            btn.innerHTML = "Remove Gift"
+            btn2.innerHTML = 'Claim Gift'
+            btn3.innerHTML = 'Add a Gift'
             let gift = data[i].firstName
             giftArray.push(gift)
             let giftLink = data[i].lastName
             linkArray.push(giftLink)
             let id = data[i]._id
             idArray.push(id)
-            p.innerHTML = `${gift} <a href="${giftLink}">${giftLink}</a>`
-            btn.innerHTML = "Remove Gift"
-            container.appendChild(p)
-            container.appendChild(btn)
+
+            let divCard = document.createElement('div')
+            divCard.className = "card w-100 p-3"
+            divCard.innerHTML = `<div class="card-body">
+            <h1 class="card-title">${gift}</h1>
+            <p class="card-text"><h1> <a href="${giftLink}">${giftLink}</a></h1></p>
+            </div>`
+            
+            mapGiftArray(giftArray)
+            dataDiv.appendChild(divCard)
+            dataDiv.appendChild(btn)
+            dataDiv.appendChild(btn2)
+            dataDiv.appendChild(btn3)
+            
 
 
             btn.addEventListener('click', () => {
@@ -45,8 +62,10 @@ window.addEventListener("load", () => {
                     
                 })
                 console.log('del complete')
-                container.removeChild(p)
-                container.removeChild(btn)
+                dataDiv.removeChild(divCard)
+                dataDiv.removeChild(btn)
+                dataDiv.removeChild(btn2)
+                dataDiv.removeChild(btn3)
             });
 
             
@@ -55,7 +74,7 @@ window.addEventListener("load", () => {
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        const dataDiv = document.getElementById('data')
+        // const dataDiv = document.getElementById('data')
         const submitButton = document.getElementById('submitbutton')
         submitButton.addEventListener('click', () => {
             let firstName = document.getElementById("datainput1").value
@@ -83,41 +102,48 @@ window.addEventListener("load", () => {
                         html: '<h1><strong>Both fields must contain a value!</strong></h1>',
                         color: 'crimson',
                         confirmButtonText: '<i class="fa fa-thumbs-up"></i> <h1>Great!<h1>',
-                        confirmButtonColor: 'crimson'
+                        confirmButtonColor: 'crimson',
+                        
                     })
                     // return alert('Both fields must contain a value!')
                 }
                 const id = result._id
-                const p = document.createElement('P')
-                p.className = "giftp"
                 const btn = document.createElement('button')
-                btn.className = "btn btn-outline-danger btn-large"
-                p.innerHTML = `${result.firstName} <a href="${result.lastName}">${result.lastName}</a>`
+                const btn2 = document.createElement('button')
+                const btn3 = document.createElement('button')
+                btn3.className = "btn btn-outline-danger"
+                btn2.className = "btn btn-outline-danger"
+                btn.className = "btn btn-outline-danger"
                 btn.innerHTML = 'Remove Gift'
+                btn2.innerHTML = 'Claim Gift'
 
                 const divCard = document.createElement('div')
-                    divCard.className = "card w-50 p-3"
-                    divCard.innerHTML = `<div class="card-body">
-                    <h1 class="card-title">${result.firstName}</h1>
-                    <p class="giftp"> <a href="${result.lastName}">${result.lastName}</a></p>
-                    <a href="#" class="btn btn-outline-danger btn-large">Remove Gift</a>
-                    </div>`
+                divCard.className = "card w-100 p-3"
+                divCard.innerHTML = `<div class="card-body">
+                <h1 class="card-title">${result.firstName}</h1>
+                <p class="card-text"><h1> <a href="${result.lastName}">${result.lastName}</a></h1></p>
+                </div>`
 
+                
                 dataDiv.appendChild(divCard)
+                dataDiv.appendChild(btn)
+                dataDiv.appendChild(btn2)
+                // divCard.appendChild(btn)
                 // dataDiv.appendChild(p)
                 // dataDiv.appendChild(btn)
                 
                 console.log('this is the result', result)
-
+                
                 btn.addEventListener('click', () => {
                     
                     fetch(`/contact/${id}`, {
                         method: 'DELETE'
                     })
-                    dataDiv.removeChild(p)
-                    dataDiv.removeChild(btn)
+                    // dataDiv.removeChild(p)
+                    // dataDiv.removeChild(btn)
                     dataDiv.removeChild(divCard)
-
+                    dataDiv.removeChild(btn)
+                    dataDiv.removeChild(btn2)
                 })
                 
             }).catch(err => console.log(err))
@@ -174,3 +200,53 @@ const subButton = document.getElementById("submitbutton")
 
 
 
+const deleteFunc = () => {
+        fetch(`/contact/${id}`, {
+            method: 'DELETE',
+            
+        })
+        console.log('del complete')
+        container.removeChild(p)
+        container.removeChild(btn)
+    }
+
+
+const addGiftToList = () => {
+    fetch(`/contact/${id}`, {
+        method: 'PUT',
+    })
+    .then(response => {
+        return response.json()
+    })
+    .then(result => {
+        if(firstName === '' || lastName === ''){
+            return Swal.fire({
+                icon:'warning',
+                iconColor: 'crimson',
+                title: 'Oops...',
+                html: '<h1><strong>Both fields must contain a value!</strong></h1>',
+                color: 'crimson',
+                confirmButtonText: '<i class="fa fa-thumbs-up"></i> <h1>Great!<h1>',
+                confirmButtonColor: 'crimson',
+                
+            });
+        }
+    let phone = result.phone
+    console.log(phone);
+    mapGiftArray(giftArray)
+
+    }).catch(err => {console.log(err)})
+}
+
+
+
+
+
+function mapGiftArray(array){
+    let create = document.createElement('P')
+    let dataDiv = document.getElementById('data')
+    dataDiv.appendChild(create)
+    array.map(gift => {
+        return create.innerHTML = gift
+    })
+}

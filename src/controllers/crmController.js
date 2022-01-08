@@ -12,6 +12,7 @@ export const addNewContact = (req, res) => {
             res.send(err);
         }
         res.json(contact);
+        console.log('Post received')
     })
 }
 
