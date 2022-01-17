@@ -27,6 +27,8 @@ const routes = (app) => {
         .put(updateContact)
 
         .delete(deleteContact)
+    //this is for posting on the :contactID page
+        // .post(addToGiftsList)
 }
 
 export default routes;

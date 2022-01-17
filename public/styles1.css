@@ -1,0 +1,138 @@
+/* this is from welcome */
+button {
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 45px;
+    max-width: 160px;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+    border-radius: 5px;
+  }
+body {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+}
+body {
+    background: #FFF;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+}
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: none;
+    padding:  40px 0px;
+    width: 240px;
+}
+.sign {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: none;
+    padding:  0px 0px;
+    width: 240px;
+}
+.title {
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 10px;
+}
+.signup {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: none;
+}
+/* .jumbotron {
+    background: rgb(255,0,0);
+    background: linear-gradient(180deg, rgba(255,0,0,1) 0%, rgba(255,0,0,0.45702030812324934) 53%, rgba(255,0,0,0) 100%);
+} */
+
+  /* this is from user dashboard */
+
+/* icons */
+.calendarweek { 
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.bi-calendar-plus:active {
+    color: crimson;
+}
+.bi-calendar-plus:hover {
+    color: crimson;
+}
+.bi-calendar4-week:active {
+    color: crimson;
+}
+.bi-calendar4-week:hover {
+    color: crimson;
+}
+.calendarspan { /* text under icons */
+  background: #FFF;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  justify-content: center;
+  padding-top: 10px;
+}
+.jumbotron {
+    background: rgb(59,130,246);
+    background: linear-gradient(180deg, rgba(59,130,246,0.2329306722689075) 39%, rgba(255,0,0,0) 100%);
+}
+/*hover drop shadow box for calendar icons */
+.calendarweek {
+    padding-top: 5px;
+    position: relative;
+    display: inline-block;
+    width: 64px;
+    height: 76px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+  
+.calendarweek::after {
+    
+    content: "";
+    border-radius: 50px;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 5px 15px rgb(59 130 246 / 50%);
+    opacity: 0;
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+  
+.calendarweek:hover {
+    -webkit-transform: scale(1.25, 1.25);
+    transform: scale(1.25, 1.25);
+}
+  
+.calendarweek:hover::after {
+      opacity: 1;
+}

@@ -1,8 +1,9 @@
 import res from 'express/lib/response';
 import mongoose from 'mongoose';
-import { ContactSchema } from '../models/crmModel';
+import { ContactSchema, giftSchema } from '../models/crmModel';
 
 const Contact = mongoose.model('Contact', ContactSchema);
+const giftS = mongoose.model('Nested', giftSchema)
 
 export const addNewContact = (req, res) => {
     let newContact = new Contact(req.body);
@@ -15,6 +16,18 @@ export const addNewContact = (req, res) => {
         console.log('Post received')
     })
 }
+//this is for posting when on a gifts ID /contact/:contactID
+// export const addToGiftsList = (req, res) => {
+//     let embedContact = new giftS(req.body);
+
+//     embedContact.save((err, contact) => { 
+//         if (err) {
+//             res.send(err);
+//         }
+//         res.json(contact)
+//         console.log('Embedded Post received.');
+//     })
+// }
 
 export const getContacts = (req, res) => {
     Contact.find({}, (err, contact) => {
