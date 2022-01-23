@@ -3,6 +3,11 @@ import { addNewContact,
         getContacts,
         getContactWithID,
         updateContact,
+        createUser,
+        removeUser,
+        getUserByID,
+        getUser,
+        registerUser,
 
 } from '../controllers/crmController';
 
@@ -29,6 +34,26 @@ const routes = (app) => {
         .delete(deleteContact)
     //this is for posting on the :contactID page
         // .post(addToGiftsList)
+
+    app.route('/signup')
+        
+       .post(registerUser)
+
+    app.route('/login')
+
+        // .post()
+
+       
+
+    app.route('/user/:userID')
+
+        .delete(removeUser)
+
+        .get(getUserByID)
+
+    app.route('/signup/:username')
+        
+        .get(getUser)
 }
 
 export default routes;

@@ -7,7 +7,9 @@ document.body.appendChild(jumboContainer)
 
 
 let h1 = document.createElement('H1')
-h1.innerHTML = `<strong>Welcome, please log in.</strong>`
+h1.innerHTML = `<strong>Welcome, please log in&nbsp;</strong>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="crimson" class="bi bi-book" viewBox="0 0 16 16">
+<path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+</svg>`
 h1.className = "title"
 document.body.appendChild(h1)
 
@@ -29,12 +31,14 @@ inputDivs2.className = "row"
 inputDivs3.className = "col-12-sm d-block"
 inputDivs4.className = "row present col-12-md"
 inputDivs5.className = "footer col-12-md"
-inputDivs6.className = "row col-12"
+inputDivs6.className = "row"
 inputDivs7.className = "container sign col-12-md"
 
-userNameInput.className = "d-block"
+loginButton.className = "btn-lg btn-outline-danger"
+
+userNameInput.className = "form-control d-block"
 userNameInput.id = "userinput"
-userPassInput.className = "d-block"
+userPassInput.className = "form-control d-block"
 userPassInput.id = "passinput"
 
 
@@ -57,7 +61,7 @@ inputDivs4.setAttribute("style", "margin-top: 10px;")
 formSection.setAttribute("action", "//localhost:4000/login")
 formSection.setAttribute("method", "post")
 
-loginButton.innerHTML = "Log In"
+loginButton.innerHTML= "Log In"
 inputDivs4.innerHTML = `<h1><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="crimson" class="bi bi-gift-fill" viewBox="0 0 16 16">
 <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"/>
 </svg></h1>`
@@ -67,7 +71,7 @@ inputDivs5.innerHTML = `<a href="mailto:" style="color: black; text-decoration: 
 inputDivs6.innerHTML = `<p>New user?&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
 <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
 <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-</svg>&nbsp;&nbsp;<a href="/newuser"><strong>Sign Up</strong></a></p>`
+</svg>&nbsp;&nbsp;<a href="/signup"><strong>Sign Up</strong></a></p>`
 
 
 

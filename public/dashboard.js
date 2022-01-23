@@ -1,15 +1,18 @@
 
+
+
+
 let jumboContainer = document.createElement('div')
 jumboContainer.className = "jumbotron jumbotron-fluid"
 jumboContainer.innerHTML = `<div class="container"><h1 class="display-3">&nbsp;</h1></div>`
 document.body.appendChild(jumboContainer)
 
 
-let user = "Temporary placeholder"
+let dynamicUserName = `<%= user %>`
 
 
 
-const h1 = document.createElement('h1')
+// const h1 = document.createElement('h1')
 
 const div1 = document.createElement('div')
 const div2 = document.createElement('div')
@@ -29,7 +32,8 @@ const span3 = document.createElement('span') //placeholders
 const span4 = document.createElement('span') //placeholders
 const span5 = document.createElement('span') //placeholders
 
-h1.className = "title"
+// h1.className = "title"
+// h1.id = "h1title"
 
 div1.className = "container"
 div2.className = "row"
@@ -48,7 +52,7 @@ span4.className = "col-2 d-flex calendarspan" //place holder
 span5.className = "col-2 d-flex calendarspan" //place holder
 
 
-h1.innerHTML = `Hello ${user}, welcome to your Dashboard.`
+// h1.innerHTML = `Hello , welcome to your Dashboard.`
 div3.innerHTML = `<a href="" style=" color: black; text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
 <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -74,7 +78,7 @@ rowDiv1.innerHTML = "row div"
 
 
 
-document.body.appendChild(h1)
+// document.body.appendChild(h1)
 document.body.appendChild(div1)
 document.body.appendChild(div2)
 document.body.appendChild(div3)
@@ -82,6 +86,8 @@ document.body.appendChild(div4)
 // document.body.appendChild(div5) //placeholder
 
 
+
+h1 = document.getElementById('h1title')
 div1.appendChild(h1)
 
 div1.appendChild(div2)

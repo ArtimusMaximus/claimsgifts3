@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
+import { PassportLocalSchema } from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -14,7 +16,19 @@ export const giftSchema = new Schema({
         default: Date.now
     }
 })
-export const giftS = mongoose.model('Nested', giftSchema)
+// export const giftS = mongoose.model('Nested', giftSchema)
+
+
+
+export const NewUserSchema = new Schema({
+    username: {
+        type: String,
+    },
+    password: {
+        type: String,
+    }
+
+});
 
 export const ContactSchema = new Schema({
     firstName: {
@@ -40,4 +54,12 @@ export const ContactSchema = new Schema({
         type: Date,
         default: Date.now
     }
-})
+});
+
+
+
+NewUserSchema.plugin(passportLocalMongoose);
+
+const NewUser = mongoose.model('NewUser', NewUserSchema);
+
+export default NewUser;
