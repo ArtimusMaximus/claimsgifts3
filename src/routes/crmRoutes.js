@@ -8,6 +8,11 @@ import { addNewContact,
         getUserByID,
         getUser,
         registerUser,
+        updateEvent,
+        createEvent,
+        findEvent,
+        addEventsToUser,
+        getEventByName,
 
 } from '../controllers/crmController';
 
@@ -39,21 +44,19 @@ const routes = (app) => {
         
        .post(registerUser)
 
-    app.route('/login')
-
-        // .post()
-
-       
-
-    app.route('/user/:userID')
-
-        .delete(removeUser)
+    app.route('/dashboarduser/:userID')
 
         .get(getUserByID)
 
-    app.route('/signup/:username')
-        
+        .put(updateEvent)
+
+        .post(createEvent)
+
+    app.route('/dashboarduser/:username')
+
         .get(getUser)
+
+       
 }
 
 export default routes;

@@ -18,11 +18,36 @@ import passportLocalMongoose from 'passport-local-mongoose';
 
 
 
-
 const Schema = mongoose.Schema;
-let NewUser1 = new Schema({
-    email: { type: String, required: true },
-    username: { type: String, required: true }
+
+let giftSchema = new Schema({
+    gname: [String],
 });
+
+let eventSchema = new Schema({
+    event: { type : [String] } , 
+    name: { type: [String] } , 
+    link: { type : [String] },
+    all: [{ event: [String], giftName: [giftSchema], giftLink: [String]}]
+})
+
+
+
+let NewUser1 = new Schema({
+    email: { type: String, required: false },
+    username: { type: String, required: false },
+    events: { type: [String], required: false }, //Array
+    giftsss: [eventSchema],
+});
+
+// NewUser1.methods.findSimilarType = function findSimilarType (cb) {
+//     return this.model('User').find({ type: this.type }, cb)
+// }
+
+
 NewUser1.plugin(passportLocalMongoose);
-export const User = mongoose.model('User', NewUser1)
+eventSchema.plugin(passportLocalMongoose);
+giftSchema.plugin(passportLocalMongoose);
+export const User = mongoose.model('User', NewUser1, 'users')
+export const Event = mongoose.model('Event', eventSchema, 'users')
+export const Gift = mongoose.model('Gift', giftSchema, 'users')

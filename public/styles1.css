@@ -142,4 +142,7 @@
     height: 50px;
     width: 90%;
 }
-
+#eventsrow {
+    margin-left: 400px;
+    margin-right: 400px;
+}

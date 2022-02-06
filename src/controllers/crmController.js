@@ -2,7 +2,7 @@ import res from 'express/lib/response';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { ContactSchema, giftSchema, NewUserSchema } from '../models/crmModel';
-import { User } from "/home/amiv/buildrestapinode/src/models/users";
+import { User, Event, Gift } from "/home/amiv/buildrestapinode/src/models/users";
 
 const Contact = mongoose.model('Contact', ContactSchema);
 const giftS = mongoose.model('Nested', giftSchema)
@@ -90,11 +90,11 @@ export const removeUser = (req, res) => {
 }
 
 export const getUser = (req, res) => {
-    User.find({}, (err, contact) => {
+    User.find({}, (err, username) => {
         if (err) {
             res.send(err)
         }
-        res.json(contact)
+        res.json(username)
     })
 }
 
@@ -104,14 +104,57 @@ export const registerUser = (req, res) => {
         req.body.password,
         (err, user) => {
             if (err) {
-                console.log(err);
-                return res.redirect('/signup')
+                console.log('registerUser error handler: ', err);
+                return res.render('/signup')
             }
-            console.log(user);
+            console.log('regiserUser user console log: ', user);
             passport.authenticate('local')(req, res, () => {
-                req.session.loggedIn ?
-                res.redirect(`/dashboard`) : res.redirect('/')
+                res.redirect('/dashboarduser')// + req.user.username)
             })
         }
     )
+}
+
+export const updateEvent = (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.userID }, req.body, { new: true }, (err, User) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(User);
+    });
+}
+
+
+export const addEventsToUser = ((req, res) => {
+    User.insertMany({events: req.body.events}, (err, arr) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(arr)  
+    })  
+})
+
+export const getEventByName = (req, res) => {
+    User.findByUsername(req.body.username, (err, user) => {
+        if (err){
+            res.send(err)
+        }
+        res.json(user);
+        console.log('request for use by username: ' + user)
+    });
+}
+
+export const createEvent = (req, res) => {
+    let addEvent = new Gift(req.body);
+    addEvent.save((err, user) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(user);
+        console.log(`user ${user} added`, typeof(user))
+    })
+}
+
+export const insertGifts = (req, res) => {
+
 }

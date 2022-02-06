@@ -1,9 +1,7 @@
-// import Swal from 'sweetalert2'
-
+import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
 
 window.addEventListener("load", () => {
-    
-    
+
     const fetchList = () => {
         fetch('/contact')
         .then((response) => {
@@ -155,7 +153,7 @@ window.addEventListener("load", () => {
             };
 
             fetch("/contact", requestOptions)
-            .then(response => response.json())
+            .then(response => response.text())
             
             .then(result => {
                 if(gift === "" || giftLink === ""){

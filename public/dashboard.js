@@ -1,6 +1,4 @@
-
-
-
+import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
 
 let jumboContainer = document.createElement('div')
 jumboContainer.className = "jumbotron jumbotron-fluid"
@@ -34,6 +32,8 @@ const span5 = document.createElement('span') //placeholders
 
 // h1.className = "title"
 // h1.id = "h1title"
+div3.id = "div3"
+div4.id = "div4"
 
 div1.className = "container"
 div2.className = "row"
@@ -51,9 +51,9 @@ span3.className = "col-2 d-flex calendarspan" //place holder
 span4.className = "col-2 d-flex calendarspan" //place holder
 span5.className = "col-2 d-flex calendarspan" //place holder
 
-
-// h1.innerHTML = `Hello , welcome to your Dashboard.`
-div3.innerHTML = `<a href="" style=" color: black; text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+// `Hello <%= user %>, welcome to your Dashboard.<a href="/logout">Logout</a>`
+// h1.innerHTML = `<h1 class="title" id="h1title">Hello <%= user %>, welcome to your Dashboard.<a href="/logout">Logout</a> </h1>`
+div3.innerHTML = `<a  style=" color: black; text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
 <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
 </svg></a>`
@@ -79,18 +79,18 @@ rowDiv1.innerHTML = "row div"
 
 
 // document.body.appendChild(h1)
-document.body.appendChild(div1)
-document.body.appendChild(div2)
-document.body.appendChild(div3)
-document.body.appendChild(div4)
+document.body.appendChild(div1) //container class
+document.body.appendChild(div2) //row class
+document.body.appendChild(div3) //icon
+document.body.appendChild(div4) //icon
 // document.body.appendChild(div5) //placeholder
 
 
 
-h1 = document.getElementById('h1title')
-div1.appendChild(h1)
+// h1 = document.getElementById('h1title')
 
-div1.appendChild(div2)
+// div1.appendChild(h1)
+div1.appendChild(div2) // row class
 div2.appendChild(div5) //placeholder
 div2.appendChild(div3)
 div2.appendChild(div6) //placeholder
@@ -106,7 +106,7 @@ div2.appendChild(span5) //placeholder
 
 
 div3.addEventListener('click', () => {
-    alert('this has been clicked')
+    Swal.fire('this has been clicked')
     
 })
 

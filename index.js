@@ -1,11 +1,12 @@
 import express from 'express';
 import routes from './src/routes/crmRoutes';
+import path from 'path'
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local'
 import session from 'express-session';
-import { User } from "/home/amiv/buildrestapinode/src/models/users";
+import { User, Event } from "/home/amiv/buildrestapinode/src/models/users";
 
 const app = express();
 const PORT = 4000;
@@ -35,29 +36,6 @@ mongoose.connect('mongodb://localhost/users', {
 // serving static files
 app.use(express.static('public'));
 
-app.get('/login/views', (req, res, next) => {
-    if (req.session.views) {
-        req.session.views ++
-        res.setHeader('Content-Type', 'text/html')
-        res.write('<h1>Views: ' + req.session.views + '</h1>')
-        res.write('<h2>Expires in ' + (req.session.cookie.maxAge / 1000) + '</h2>')
-        res.end()
-    } else {
-        req.session.views = 1
-        res.end('session demo, refresh')
-    }
-})
-// app.use((req, res, next) => {
-//     if (!req.session.views) {
-//         req.session.views = {}
-//     }
-//     let pathname = parseurl(req).pathname
-//     req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
-//     next()
-// })
-// app.get('/login', (req, res) => {
-//     res.send('you requested this page ' + req.session.views['/login'] + ' time(s)')
-// })
 
 
 //body parser setup - middleware for parsing the body data
@@ -66,7 +44,7 @@ app.use(bodyParser.json());
 
 
 //routes from our controller
-routes(app);
+
 
 //routes from our router
 
@@ -83,7 +61,9 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
+passport.serializeUser(Event.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(Event.deserializeUser());
 
 
 
@@ -91,11 +71,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-app.use((req, res, next) => {
-    res.locals.user = req.user;
-    console.log(res.locals.user);
-    next();
-})
+
 
 //routes
 app.get('/', (req, res) => {
@@ -104,51 +80,92 @@ app.get('/', (req, res) => {
 });
 
 //template engine
-
+// app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs');
-app.get('/login', (req, res) => {
-    res.render('login.ejs')
-})
-app.get('/dashboard', isLoggedIn, (req, res) => {
-    res.render('dashboard.ejs', {title: 'Dashboard', user: req.user.username})
-})
-app.get('/dashboard/:username', (req, res) => {
-    res.send(req.params)
-})
 
-app.get('/signup', (req, res) => {
-    res.render('signup.ejs')
-})
+// app.use((req, res, next) => {
+//     res.locals.user = req.user;
+//     res.locals.email = req.user
+//     res.locals.filter = req.body.filter
+//     console.log('res.locals.user in index app.use: ', res.locals);
+//     next();
+// })
+
 app.get('/secret', isLoggedIn, (req, res) => {
     res.render('secret')
 })
+app.get('/signup', (req, res) => {
+    res.render('signup.ejs')
+})
+app.get('/login', (req, res) => {
+    res.render('login.ejs')
+})
+app.get('/dashboarduser/events', isLoggedIn, (req, res) => {
+    res.render('existingevents', {user: req.user.username})
+})
+
+// app.get('/login', (req, res, next) => {
+//     passport.authenticate('local', (err, user, info) => {
+//         if(err){ return next(err) }
+//         if(!user){ return res.redirect('/login') }
+//         req.logIn(user, (err) => {
+//             if(err){ return next(err) }
+//             return res.redirect('/dashboard/' + user.username)
+//         });
+//     })(req, res, next);
+//     res.render('/login')
+// });
+
+
+// app.post('/signup', (req, res) => {
+//     res.send(req.body)
+// })
+
+app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
+    res.render('dashboarduser', {title: 'Dashboard', user: req.user.username, events: req.user.events, userID: req.user._id})
+    // res.setHeader("Content-Type", "text/javascript")
+})
+// app.get(`/dashboarduser/:username`, isLoggedIn, (req, res) => {    //get this working at some point
+//     res.setHeader("Content-Type", "text/html")
+//     res.render('dashboarduser', {user: req.user.username})
+//     console.log("req.user: " + req.user.username);
+// })
+
 
 app.post('/contact', (req, res) => {
     console.log(req.body)
     res.send('app dot post used')
 })
-// app.post('/signup', (req, res) => {
-//     res.send(req.body)
-// })
+
+
 app.post('/login', passport.authenticate('local', {
-    successRedirect: '/secret',
-    failureRedirect: 'login',
+    // successRedirect: `/dashboarduser`,
+    failureRedirect: '/login',
+    failureFlash: true,
 }), (req, res) => {
-    res.send(req.body.authenticate)
+    res.redirect('/dashboarduser')// + req.user.username)
+    console.log('req.user.events from app.post/login : ' + req.user.events);
+});
+
+
+
+
+
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login')
 })
 
 
-
-
-
 function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()){
+    if(req.user){
         return next();
-    }
+    } 
     res.redirect('/login')
 }
 
-
+routes(app); //when this was up top, it was running before the other items (authentication mainly) were able to happen on user creation
 
 //node authentication
 
@@ -156,4 +173,4 @@ app.listen(PORT, () =>
     console.log(`Your server is running on PORT ${PORT}.`)
 );
 
-export default User;
+export default User; 

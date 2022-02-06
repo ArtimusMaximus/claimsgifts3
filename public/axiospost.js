@@ -31,7 +31,7 @@ window.addEventListener('load', () => {
       };
 
       fetch('/signup', requestOptions)
-        .then(response => response.json())
+        .then(response => response.text())
         .then(result => {
           if (newUserNameInput === "" || newUserPassInput === "") {
             return alert('both fields must be submitted')
@@ -39,13 +39,11 @@ window.addEventListener('load', () => {
           if (newUserPassInput !== newUserPassConfirmInput) {
               return alert('passwords must match!')
           }
-          console.log(result);
+          console.log('result of fetch call in axiospost.ks:' + result);
           
         })
         
         .catch(error => console.log('error', error));
-      let fetchUserName;
-      fetch('/', {method: 'GET', })
 
 
     })

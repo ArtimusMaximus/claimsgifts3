@@ -5,16 +5,8 @@ import { PassportLocalSchema } from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const giftSchema = new Schema({
-    gift: {
-        type: String,
-    },
-    giftLink: {
-        type: String,
-    },
-    created_date: {
-        type: Date,
-        default: Date.now
-    }
+    gift: String,
+    giftlink: String,
 })
 // export const giftS = mongoose.model('Nested', giftSchema)
 
@@ -26,7 +18,10 @@ export const NewUserSchema = new Schema({
     },
     password: {
         type: String,
-    }
+    },
+    events: String,
+
+    gifts: [giftSchema]
 
 });
 
