@@ -13,6 +13,9 @@ import { addNewContact,
         findEvent,
         addEventsToUser,
         getEventByName,
+        insertGifts,
+        addGiftz,
+        updateUser,
 
 } from '../controllers/crmController';
 
@@ -44,17 +47,31 @@ const routes = (app) => {
         
        .post(registerUser)
 
+    app.route('/dashboarduser')
+
+        .post(createEvent)
+
+        .get(getEventByName)
+
     app.route('/dashboarduser/:userID')
 
         .get(getUserByID)
 
-        .put(updateEvent)
+        .put(updateUser)
+
+        .post(addGiftz)
+
+    app.route('/dashboard/:event')
 
         .post(createEvent)
 
-    app.route('/dashboarduser/:username')
+        .put(updateEvent)
 
-        .get(getUser)
+        .get(getEventByName)
+
+    app.route('/dashboarduser/:username/:events1')
+
+        .post(addGiftz)
 
        
 }

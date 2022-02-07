@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= events1 %></title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.css">
+    <style>
+        h1{
+            font-size: xx-large;
+        }
+      
+      #data {
+          background-color: whitesmoke;
+          border-radius: 10px;
+      }
+      #data:hover{
+          background-color: white;
+          
+      }
+      iframe{
+          display: none;
+      }
+      .btn{
+          font-size: xx-large;
+          padding: 20px;
+          margin: 20px;
+          
+      }
+      .giftp{
+          font-size: 48px;
+          padding: 20px;
+          margin: 20px;
+          
+      }
+      h2{
+        font-size: x-large;
+      }
+      .jumbotron{
+          background-color:crimson;
+      }
+      input{
+          padding: 5px;
+          margin: 5px;
+      }
+      #submitbutton{
+        background-color:crimson;
+        color:whitesmoke;
+      }
+      dialog{
+        box-shadow: 0 0 15 black;
+      }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="jumbotron jumbotron-fluid">
+        <h1 style="color: whitesmoke" class="display-4"> Gift Wish List for event: <%=eventname %></h1>
+        </div>
+        <form action="/dashboarduser/:username/:events1/gifts" method="post" target="frame" id="subform">
+            <input type="text" id="datainput1" name="gift" onfocus="this.placeholder=''" onblur="this.placeholder='Gift Name'" placeholder="Gift Name">
+            <input type="text" id="datainput2" name="giftLink" onfocus="this.placeholder=''" onblur="this.placeholder='Add Link'" placeholder="Add Link">
+            <button type="button" id="submitbutton" class="btn btn-lg">Add Gift&nbsp;</button>
+            <hr>
+        </form>
+                   
+        <div id="data"></div>
+                        
+            
+    </div>
+    <iframe name="frame"></iframe>
+    
+   
+    <script type="module" src="gifts.js">
+        import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
+    </script>
+
+</body>
+</html>

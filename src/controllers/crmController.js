@@ -90,7 +90,7 @@ export const removeUser = (req, res) => {
 }
 
 export const getUser = (req, res) => {
-    User.find({}, (err, username) => {
+    User.find({username: req.body.username}, (err, username) => {
         if (err) {
             res.send(err)
         }
@@ -115,7 +115,7 @@ export const registerUser = (req, res) => {
     )
 }
 
-export const updateEvent = (req, res) => {
+export const updateUser = (req, res) => {
     User.findOneAndUpdate({ _id: req.params.userID }, req.body, { new: true }, (err, User) => {
         if (err) {
             res.send(err);
@@ -126,7 +126,7 @@ export const updateEvent = (req, res) => {
 
 
 export const addEventsToUser = ((req, res) => {
-    User.insertMany({events: req.body.events}, (err, arr) => {
+    User.insertMany({event: req.body.event}, (err, arr) => {
         if(err){
             res.send(err)
         }
@@ -135,7 +135,7 @@ export const addEventsToUser = ((req, res) => {
 })
 
 export const getEventByName = (req, res) => {
-    User.findByUsername(req.body.username, (err, user) => {
+    Event.findByUsername(req.params.username, (err, user) => {
         if (err){
             res.send(err)
         }
@@ -145,16 +145,41 @@ export const getEventByName = (req, res) => {
 }
 
 export const createEvent = (req, res) => {
-    let addEvent = new Gift(req.body);
-    addEvent.save((err, user) => {
+    let addEvent = new Event(req.body);
+    addEvent.save((err, event) => {
         if (err) {
             res.send(err);
         }
-        res.json(user);
-        console.log(`user ${user} added`, typeof(user))
+        res.json(event);
+        console.log(`Event ${event} added`, typeof(event))
     })
 }
 
 export const insertGifts = (req, res) => {
-
+    const event = new Event(req.body);
+    event.save((err, gname) => {
+        if(err) {
+            res.send(err);
+        }
+        res.json(gname)
+    })
 }
+
+export const addGiftz = (req, res) => {
+    const giftz = new Gift(req.body)
+    giftz.save((err, gift) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(gift)
+    })
+}
+
+export const updateEvent = ((req, res) => {
+    Event.findOneAndUpdate({_id: req.params.userID}, req.body, {new: true}, ((err, event) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(event)
+    }))
+})

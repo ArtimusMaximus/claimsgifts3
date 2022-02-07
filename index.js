@@ -122,14 +122,14 @@ app.get('/dashboarduser/events', isLoggedIn, (req, res) => {
 // })
 
 app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
-    res.render('dashboarduser', {title: 'Dashboard', user: req.user.username, events: req.user.events, userID: req.user._id})
+    res.render('dashboarduser', {title: 'Dashboard', user: req.user.username, events1: req.user.events1, userID: req.user._id})
     // res.setHeader("Content-Type", "text/javascript")
 })
-// app.get(`/dashboarduser/:username`, isLoggedIn, (req, res) => {    //get this working at some point
-//     res.setHeader("Content-Type", "text/html")
-//     res.render('dashboarduser', {user: req.user.username})
-//     console.log("req.user: " + req.user.username);
-// })
+app.get(`/dashboarduser/:username/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
+    // res.setHeader("Content-Type", "text/html")
+    res.render('gifts', {user: req.user.username, events1: req.user.events1, eventname: req.params.events1})
+    console.log("req.user: " + req.user.username);
+})
 
 
 app.post('/contact', (req, res) => {
