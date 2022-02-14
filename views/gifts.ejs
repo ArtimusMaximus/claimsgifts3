@@ -12,6 +12,7 @@
     <style>
         h1{
             font-size: xx-large;
+            
         }
       
       #data {
@@ -42,12 +43,14 @@
       }
       .jumbotron{
           background-color:crimson;
+          font-family: 'Tangerine', cursive;
+          
       }
       input{
           padding: 5px;
           margin: 5px;
       }
-      #submitbutton{
+      #submitbutton1 {
         background-color:crimson;
         color:whitesmoke;
       }
@@ -61,10 +64,10 @@
         <div class="jumbotron jumbotron-fluid">
         <h1 style="color: whitesmoke" class="display-4"> Gift Wish List for event: <%=eventname %></h1>
         </div>
-        <form action="/dashboarduser/:username/:events1/gifts" method="post" target="frame" id="subform">
-            <input type="text" id="datainput1" name="gift" onfocus="this.placeholder=''" onblur="this.placeholder='Gift Name'" placeholder="Gift Name">
-            <input type="text" id="datainput2" name="giftLink" onfocus="this.placeholder=''" onblur="this.placeholder='Add Link'" placeholder="Add Link">
-            <button type="button" id="submitbutton" class="btn btn-lg">Add Gift&nbsp;</button>
+        <form action="/dashboarduser/:username/:events1" method="post" target="frame" id="subform">
+            <input type="text" id="datainput1" name="giftx" onfocus="this.placeholder=''" onblur="this.placeholder='Gift Name'" placeholder="Gift Name">
+            <input type="text" id="datainput2" name="giftLinkx" onfocus="this.placeholder=''" onblur="this.placeholder='Add Link'" placeholder="Add Link">
+            <button type="button" id="submitbutton1" class="btn btn-lg">Add Gift&nbsp;</button>
             <hr>
         </form>
                    
@@ -72,11 +75,17 @@
                         
             
     </div>
+    <p hidden id="giftid"><%=gift %></p>
+    <p hidden id="giftLinkid"><%=giftLink %></p>
+    <p hidden id="events1id"><%=events1 %></p>
+    <p hidden id="eventid"><%=event %></p>
+    <p hidden id="usernameid"><%=user %></p>
+    <p hidden id="ename"><%=eventname %></p>
     <iframe name="frame"></iframe>
     
    
-    <script type="module" src="gifts.js">
-        import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
+    <script type="module" src="/gifts.js">
+         import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
     </script>
 
 </body>

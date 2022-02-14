@@ -16,6 +16,10 @@ import { addNewContact,
         insertGifts,
         addGiftz,
         updateUser,
+        removeGift,
+        getGift,
+        getGift2,
+        getGiftById,
 
 } from '../controllers/crmController';
 
@@ -47,11 +51,19 @@ const routes = (app) => {
         
        .post(registerUser)
 
-    app.route('/dashboarduser')
+       app.route('/dashboard/:event')
+
+       .post(createEvent)
+
+       .put(updateEvent)
+
+       .get(getEventByName)
+
+    app.route('/dashboarduser/:event')
 
         .post(createEvent)
 
-        .get(getEventByName)
+        .get(getGift)
 
     app.route('/dashboarduser/:userID')
 
@@ -61,17 +73,17 @@ const routes = (app) => {
 
         .post(addGiftz)
 
-    app.route('/dashboard/:event')
+    app.route('/dashboarduser/:username/:events1') 
 
-        .post(createEvent)
+        .post(addGiftz) // this works
 
-        .put(updateEvent)
+        .get(getGift2) // getGift prior
 
-        .get(getEventByName)
+    app.route('/dashboarduser/gift/:giftID')
 
-    app.route('/dashboarduser/:username/:events1')
+        .delete(removeGift)
 
-        .post(addGiftz)
+        .get(getGiftById)
 
        
 }

@@ -135,7 +135,7 @@ export const addEventsToUser = ((req, res) => {
 })
 
 export const getEventByName = (req, res) => {
-    Event.findByUsername(req.params.username, (err, user) => {
+    Event.findOne({username: req.params.username}, (err, user) => {
         if (err){
             res.send(err)
         }
@@ -182,4 +182,40 @@ export const updateEvent = ((req, res) => {
         }
         res.json(event)
     }))
+})
+
+export const removeGift = ((req, res) => {
+    Gift.deleteOne({_id: req.params.giftID}, (err, user) => {
+        if(err){
+            res.send(err)
+        }
+        res.json({message: `${user} deleted`})
+    })
+})
+
+export const getGift = ((req, res) => {
+    Gift.find({event: req.params.event}, (err, user) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(user)
+    })
+})
+
+export const getGift2 = ((req, res) => {
+    Gift.find({event: req.params.events1}, (err, user) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(user)
+    })
+})
+
+export const getGiftById = ((req, res) => {
+    Gift.findById(req.params.giftID, (err, gift) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(gift)
+    })
 })

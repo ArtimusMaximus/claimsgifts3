@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local'
 import session from 'express-session';
-import { User, Event } from "/home/amiv/buildrestapinode/src/models/users";
+import { User, Event, Gift } from "/home/amiv/buildrestapinode/src/models/users";
 
 const app = express();
 const PORT = 4000;
@@ -34,7 +34,7 @@ mongoose.connect('mongodb://localhost/users', {
 /////////////////////////
 
 // serving static files
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public/'));
 
 
 
@@ -62,8 +62,10 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.serializeUser(Event.serializeUser());
+passport.serializeUser(Gift.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 passport.deserializeUser(Event.deserializeUser());
+passport.deserializeUser(Gift.deserializeUser());
 
 
 
@@ -126,10 +128,15 @@ app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
     // res.setHeader("Content-Type", "text/javascript")
 })
 app.get(`/dashboarduser/:username/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
-    // res.setHeader("Content-Type", "text/html")
-    res.render('gifts', {user: req.user.username, events1: req.user.events1, eventname: req.params.events1})
+    res.setHeader("Content-Type", "text/html; charset=UTF-8")
+    
+    res.render('gifts', {user: req.user.username, events1: req.user.events1, eventname: req.params.events1, gift: req.user.gift, giftLink: req.user.giftLink, event: req.params.event})
     console.log("req.user: " + req.user.username);
+    console.log('req.user.gift ' + req.user.gift);
 })
+// app.get('/dashboarduser/:event', (req, res) => {
+//     res.render('gifts', {event: req.params.event}, (err, event) => {})
+// })
 
 
 app.post('/contact', (req, res) => {

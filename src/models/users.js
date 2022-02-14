@@ -21,8 +21,11 @@ import passportLocalMongoose from 'passport-local-mongoose';
 const Schema = mongoose.Schema;
 
 let giftSchema = new Schema({
-    gift: [String],
-    giftLink: [String]
+    giftx: String,
+    giftLinkx: String,
+    event: String,
+    username: String
+
 });
 
 let eventSchema = new Schema({
@@ -36,7 +39,7 @@ let eventSchema = new Schema({
 let NewUser1 = new Schema({
     email: { type: String, required: false },
     username: { type: String, required: false },
-    events1: [String]
+    events1: [String],
 });
 
 // NewUser1.methods.findSimilarType = function findSimilarType (cb) {
