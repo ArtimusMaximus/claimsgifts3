@@ -2,7 +2,8 @@
 .btn-lg {
     letter-spacing: 0.1em;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 48px;
+    font-family: 'Tangerine', cursive;
     font-weight: lighter;
     line-height: 45px;
     max-width: 200px;
@@ -11,7 +12,7 @@
     text-decoration: none;
     width: 100%;
     border-radius: 5px;
-    color: crimson;
+    color: #dc143c;
   }
  /* body {
     box-sizing: border-box;
@@ -96,6 +97,12 @@
 .jumbotron {
     background: rgb(59,130,246);
     background: linear-gradient(180deg, rgba(59,130,246,0.2329306722689075) 39%, rgba(255,0,0,0) 100%);
+}
+.jumbotron2 {
+    background: rgb(220,20,60);
+    background: linear-gradient(0deg, rgba(220,20,60,0) 0%, rgba(220,20,60,1) 100%);
+    font-family: 'Tangerine', cursive;
+    font-size: 96px;
 }
 /*hover drop shadow box for calendar icons */
 .calendarweek {

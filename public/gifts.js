@@ -41,14 +41,14 @@ window.addEventListener("load", () => {
         for(let i = 0; i < data.length; i++){
             let btn = document.createElement('button')
             let btn2 = document.createElement('button')
-            let btn3 = document.createElement('button')
-            btn3.className = "btn btn-outline-danger"
+            // let btn3 = document.createElement('button')
+            // btn3.className = "btn btn-outline-danger"
             btn2.className = "btn btn-outline-danger"
-            btn3.id = "btn3"
+            // btn3.id = "btn3"
             btn.className = "btn btn-outline-danger btn-large"
             btn.innerHTML = "Remove Gift"
             btn2.innerHTML = 'Claim Gift'
-            btn3.innerHTML = 'Add a Gift'
+            // btn3.innerHTML = 'Add a Gift'
             let dataDiv = document.getElementById('data')
             let coData = data[i]
             console.log('codata: ', coData);
@@ -66,6 +66,7 @@ window.addEventListener("load", () => {
             // console.log('id2: ' , id2);
             idArray.push(id)
 
+            console.log(typeof('type of giftz' + giftz));
             let divCard = document.createElement('div')
             divCard.className = "card w-100 p-3"
             divCard.innerHTML = `<div class="card-body">
@@ -77,23 +78,24 @@ window.addEventListener("load", () => {
             dataDiv.appendChild(divCard)
             dataDiv.appendChild(btn)
             dataDiv.appendChild(btn2)
-            dataDiv.appendChild(btn3)
+            // dataDiv.appendChild(btn3)
             
             btn.addEventListener('click', () => {
-                fetch(`/dashboarduser/:username/:events1/${id}`, {
+                fetch(`/dashboarduser/${id}`, {
                     method: 'DELETE',
                     
                 })
+                .then
             // btn.addEventListener('click', () => {
             //     fetch(`/contact/${id2}`, {
             //         method: 'DELETE',
                     
             //     })
-                console.log('del complete')
+                console.log('Gift entry Deleted.')
                 dataDiv.removeChild(divCard)
                 dataDiv.removeChild(btn)
                 dataDiv.removeChild(btn2)
-                dataDiv.removeChild(btn3)
+                // dataDiv.removeChild(btn3)
             });
         }
 
@@ -212,7 +214,7 @@ const submitButton = document.getElementById('submitbutton1')
                 btn.className = "btn btn-outline-danger"
                 btn.innerHTML = 'Remove Gift'
                 btn2.innerHTML = 'Claim Gift'
-                btn3.innerHTML = 'Add a Gift'
+                
 
                 
 

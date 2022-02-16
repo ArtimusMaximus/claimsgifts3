@@ -211,11 +211,20 @@ export const getGift2 = ((req, res) => {
     })
 })
 
-export const getGiftById = ((req, res) => {
+export const getGiftById = (req, res) => {
     Gift.findById(req.params.giftID, (err, gift) => {
         if(err){
             res.send(err)
         }
         res.json(gift)
+    })
+}
+
+export const deleteEventGifts = ((req, res) => {
+    Gift.deleteMany({event: req.params.event}).then((err, event) => {
+        if(err){
+            res.send(err)
+        }
+        res.send({message: `all items related to ${event} have been deleted`})
     })
 })

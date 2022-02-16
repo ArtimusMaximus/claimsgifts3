@@ -20,6 +20,7 @@ import { addNewContact,
         getGift,
         getGift2,
         getGiftById,
+        deleteEventGifts,
 
 } from '../controllers/crmController';
 
@@ -65,13 +66,13 @@ const routes = (app) => {
 
         .get(getGift)
 
+        // .delete(deleteEventGifts) //needs new end pt
+
     app.route('/dashboarduser/:userID')
 
-        .get(getUserByID)
+    //     .get(getUserByID)
 
-        .put(updateUser)
-
-        .post(addGiftz)
+        .put(updateUser) //this updates our event list
 
     app.route('/dashboarduser/:username/:events1') 
 
@@ -79,11 +80,11 @@ const routes = (app) => {
 
         .get(getGift2) // getGift prior
 
-    app.route('/dashboarduser/gift/:giftID')
+    app.route('/dashboarduser/:giftID')
 
-        .delete(removeGift)
+        .delete(removeGift) //delete works
 
-        .get(getGiftById)
+        .get(getGiftById) //this does not work yet
 
        
 }

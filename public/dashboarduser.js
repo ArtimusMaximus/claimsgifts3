@@ -48,17 +48,20 @@ newEventButton.addEventListener('click', () => {
         //     })
         // }
         // mapEvents()
+        const filterValueArr = textValueArray.filter(Boolean)
+        const filterEventsArr = userEventsArr.filter(Boolean)
 
         function mapEvents2(arr){
             arr.map((events) => {
                 urlencoded.append('events1', `${events}`)
             })
         }
-        mapEvents2(textValueArray)
-        if(!userEventsArr[0] === undefined){
+        mapEvents2(filterValueArr)
+        if(!filterEventsArr[0] === undefined){
             return
         }
-        mapEvents2(userEventsArr)
+        mapEvents2(filterEventsArr)
+        
         
         // urlencoded.append('username', `${user}`)
 
@@ -150,6 +153,7 @@ let h1EventsList = document.getElementById('eventslist')
 let h1Inner = h1EventsList.innerHTML
 let eventsArr = []
 let currentEventsArray = h1Inner.split(',')
+currentEventsArray.filter(Boolean) //filters out empty array values
 eventsArr.push(currentEventsArray)
 console.log(typeof(eventsArr))
 
@@ -161,13 +165,14 @@ for(let i=0; i < currentEventsArray.length; i++){
     let events = currentEventsArray[i]
 
     const card = document.createElement('div')
-    card.className = "container"
+    card.className = "container col-6"
     card.innerHTML = `<a href="/dashboarduser/${user}/${events}"><h2><div class="card border-danger mb-3" style="max-width: 18rem;">
 <div class="card-header">${user}'s Event</div></a>
 <div class="card-body text-danger">
   <h5 class="card-title"></h5>
   <p class="card-text">${events}</p>
-</div></h2>`
+    
+  </div>`
 h1EventsRow.appendChild(card)
 }
 

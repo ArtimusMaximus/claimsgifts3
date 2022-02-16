@@ -60,6 +60,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy(Gift.authenticate()));
+// does gift simply not have the auth to proceed?
 passport.serializeUser(User.serializeUser());
 passport.serializeUser(Event.serializeUser());
 passport.serializeUser(Gift.serializeUser());
@@ -106,6 +108,10 @@ app.get('/dashboarduser/events', isLoggedIn, (req, res) => {
     res.render('existingevents', {user: req.user.username})
 })
 
+// app.get('/dashboarduser/:giftID',isLoggedIn, (req, res) => {
+//     res.write('ready for removal by id')
+// })
+
 // app.get('/login', (req, res, next) => {
 //     passport.authenticate('local', (err, user, info) => {
 //         if(err){ return next(err) }
@@ -127,12 +133,12 @@ app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
     res.render('dashboarduser', {title: 'Dashboard', user: req.user.username, events1: req.user.events1, userID: req.user._id})
     // res.setHeader("Content-Type", "text/javascript")
 })
+// let reqUser;
 app.get(`/dashboarduser/:username/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
     res.setHeader("Content-Type", "text/html; charset=UTF-8")
+    // reqUser = req.user.username
+    res.render('gifts', {user: req.user.username, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event})
     
-    res.render('gifts', {user: req.user.username, events1: req.user.events1, eventname: req.params.events1, gift: req.user.gift, giftLink: req.user.giftLink, event: req.params.event})
-    console.log("req.user: " + req.user.username);
-    console.log('req.user.gift ' + req.user.gift);
 })
 // app.get('/dashboarduser/:event', (req, res) => {
 //     res.render('gifts', {event: req.params.event}, (err, event) => {})
@@ -151,7 +157,7 @@ app.post('/login', passport.authenticate('local', {
     failureFlash: true,
 }), (req, res) => {
     res.redirect('/dashboarduser')// + req.user.username)
-    console.log('req.user.events from app.post/login : ' + req.user.events);
+    
 });
 
 
