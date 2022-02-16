@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
     let username = document.getElementById('usernameid').innerHTML
     
     const fetchList = () => {
-        fetch(`/dashboarduser/${eventname}`)
+        fetch(`/dashboard/${eventname}`)
         .then((response) => {
             return response.json();
         })
@@ -43,9 +43,9 @@ window.addEventListener("load", () => {
             let btn2 = document.createElement('button')
             // let btn3 = document.createElement('button')
             // btn3.className = "btn btn-outline-danger"
-            btn2.className = "btn btn-outline-danger"
+            btn2.className = "btn btn-lg btn-outline-danger"
             // btn3.id = "btn3"
-            btn.className = "btn btn-outline-danger btn-large"
+            btn.className = "btn btn-lg btn-outline-danger"
             btn.innerHTML = "Remove Gift"
             btn2.innerHTML = 'Claim Gift'
             // btn3.innerHTML = 'Add a Gift'
@@ -152,7 +152,7 @@ const submitButton = document.getElementById('submitbutton1')
             console.log('gift, giftlink', gift, giftLink);
             
             let eventname = document.getElementById('ename').innerHTML
-    let username = document.getElementById('usernameid').innerHTML
+            let username = document.getElementById('usernameid').innerHTML
 
             
             
@@ -208,10 +208,9 @@ const submitButton = document.getElementById('submitbutton1')
                 const id = result._id
                 const btn = document.createElement('button')
                 const btn2 = document.createElement('button')
-                const btn3 = document.createElement('button')
-                btn3.className = "btn btn-outline-danger"
-                btn2.className = "btn btn-outline-danger"
-                btn.className = "btn btn-outline-danger"
+                
+                btn2.className = "btn btn-lg btn-outline-danger"
+                btn.className = "btn btn-lg btn-outline-danger"
                 btn.innerHTML = 'Remove Gift'
                 btn2.innerHTML = 'Claim Gift'
                 

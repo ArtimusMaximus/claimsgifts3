@@ -52,21 +52,21 @@ const routes = (app) => {
         
        .post(registerUser)
 
-       app.route('/dashboard/:event')
+    // app.route('/dashboard/:event')
 
-       .post(createEvent)
+    //    .post(createEvent)
 
-       .put(updateEvent)
+    //    .put(updateEvent)
 
-       .get(getEventByName)
+    //    .get(getEventByName)
 
-    app.route('/dashboarduser/:event')
+    app.route('/dashboard/:event')
 
-        .post(createEvent)
+        // .post(createEvent) 
 
-        .get(getGift)
+        .get(getGift) // pulls existing gifts for event
 
-        // .delete(deleteEventGifts) //needs new end pt
+        .delete(deleteEventGifts) // delete many,
 
     app.route('/dashboarduser/:userID')
 
