@@ -36,7 +36,7 @@ newEventButton.addEventListener('click', () => {
             type: 'success',
             title: `An event named '${text}' was created.`,
             confirmButtonColor: 'crimson',
-            icon: 'crimson'
+            
         })
          //textvalue array spot
         
@@ -184,33 +184,108 @@ console.log(typeof(eventsArr))
 console.log('current events array: ' + currentEventsArray[1]);
 console.log(currentEventsArray.length);
 
-
+    
 for(let i=0; i < currentEventsArray.length; i++){
     let events = currentEventsArray[i]
 
     const card = document.createElement('div')
     card.className = "container col-6"
-    card.innerHTML = `<a href="/dashboarduser/${user}/${events}"><h2><div class="card border-danger mb-3" style="max-width: 18rem;">
-<div class="card-header">${user}'s Event</div></a>
+    card.innerHTML = `<h2><a href="/dashboarduser/${user}/${events}"><div class="card border-danger mb-3" style="max-width: 18rem;">
+<div class="card-header">${user}'s Event</div></a></h2>
 <div class="card-body text-danger">
   <h5 class="card-title"></h5>
   <p class="card-text">${events}</p>
 </div>
-  <div class="row">
+<div class="row">
   <div class="container col-6">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+    <svg id="${events}" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
       <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
     </svg>
+    <p>Remove</p>
   </div>
-  <div class="container col-6">
+  
+  <div class="container col-6" id="adddate">
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
       <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
       <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
     </svg>
+    <p>Date</p>
     </div>
-  </div>
+</div>
   `
 h1EventsRow.appendChild(card)
+
+
+
+let remEvent = document.querySelectorAll(`#${events}`)
+
+remEvent.forEach(link => link.addEventListener('click', () => {
+    let arr = [];
+    arr.push(link)
+    console.log(arr);
+
+    (async () => {
+        let { value: isConfirmed } = await Swal.fire({
+        title: `Are you sure you want to remove event ${events}?`,
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: '#DC143C',
+        cancelButtonColor: '#DC143C',
+        confirmButtonText: 'Yes, delete it!'
+    })
+    if(isConfirmed){
+        Swal.fire(
+            'Event deleted!',
+            'Your event has been removed.',
+            'success',
+        )
+        console.log('aaa ' + isConfirmed) // works
+
+        // fetch
+
+    }
+    })()
+    
+}))
+
 }
 
 
+
+
+let addDate = document.querySelectorAll('#adddate')
+
+addDate.forEach(date => date.addEventListener('click', () => {
+    (async () => {
+        let { value: text } = await Swal.fire({
+            title: 'Set a date for your event:',
+            width: 600,
+            input: 'text',
+            inputPlaceholder: 'mm/dd/yyyy',
+            padding: '3em',
+            color: '#DC143C',
+            confirmButtonColor: '#DC143C',
+            confirmButtonText: 'Confirm',
+            background: '#fff url()',
+            backdrop: `
+              rgba(0,0,123,0.4)
+              url("/images/christmasmickeymouse.gif")
+              left top
+              no-repeat
+            `
+        })
+    if(text){
+        Swal.fire({
+            title: 'Date has been "up-Dated"!',
+            type: 'success',
+            iconColor: '#DC143C',
+            confirmButtonColor: '#DC143C',
+        })
+        
+        console.log(text)
+    }    
+
+
+    })()
+
+}))

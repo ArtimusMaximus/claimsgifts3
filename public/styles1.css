@@ -50,7 +50,7 @@
     margin-bottom: 40px;
 }
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     margin: 10px;
@@ -152,4 +152,13 @@
 #eventsrow {
     margin-left: 400px;
     margin-right: 400px;
+}
+
+#removeevent {
+    position: relative;
+    left: 0;
+}
+
+#adddate {
+    right: 0;
 }
