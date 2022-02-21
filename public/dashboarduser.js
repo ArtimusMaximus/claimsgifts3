@@ -9,38 +9,52 @@ const user = innerPara2.innerHTML
 console.log(userid)
 console.log('username: ' + user)
 let innerEvents = document.getElementById('eventslist')
+let dateList = document.getElementById('date')
+const dateTimes = dateList.innerHTML
 const userEvents = innerEvents.innerHTML
 console.log('innerevents innerhtml: ' + userEvents);
 console.log('userevents.split at comma: ' + userEvents.split(","))
 console.log(typeof( 'type of' + userEvents)); //user events is type string
 
+let dateTimesArr = dateTimes.split(",")
 let userEventsArr = userEvents.split(",")
 console.log('usereventsarr: ' + userEventsArr);
 
 let h1EventsRow = document.getElementById('eventsrow')
 const newEventButton = document.getElementById('div3')
+const formValuesArray = [];
 const textValueArray = [];
+const datesArray = [];
 // textValueArray.push(userEvents.split())
 newEventButton.addEventListener('click', () => {
     (async () => {
-        let { value: text } = await Swal.fire({
+        let { value: formValues } = await Swal.fire({
             type: 'question',
             title: 'Name of your event',
-            input: 'text',
+            html: '<input id="input1" class="swal2-input">' + '<input id="input2" class="swal2-input" type="date">',
             inputPlaceholder: 'e.g. Christmas, Birthday, Wedding...',
             confirmButtonColor: 'crimson',
             typeColor: 'crimson',
+            focusConfirm: false,
+            preConfirm: () => {
+                return {
+                    "event": document.getElementById('input1').value,
+                    "date": document.getElementById('input2').value
+                }
+            }
         })
-    if(text){
+    if(formValues){
         Swal.fire({
             type: 'success',
-            title: `An event named '${text}' was created.`,
+            title: `An event named '${formValues.event}' for date '${formValues.date}' was created.`,
             confirmButtonColor: 'crimson',
-            
         })
+        console.log('formvalues' + formValues)
          //textvalue array spot
         
-        textValueArray.push(text)
+        datesArray.push(formValues.date)
+        textValueArray.push(formValues.event)
+        formValuesArray.push(formValues)
         let urlencoded = new URLSearchParams();
         // function mapEvents(){
         //     textValueArray.map((events) => {
@@ -48,19 +62,51 @@ newEventButton.addEventListener('click', () => {
         //     })
         // }
         // mapEvents()
-        const filterValueArr = textValueArray.filter(Boolean)
+
+        
+
+        // function mapDates(arr) {
+        //     arr.map((dates) => {
+        //         urlencoded.append('date', `${dates}`)
+        //     })
+        // }
+        // const filterTextValueArr = textValueArray.filter(Boolean)
+        const filterDatesArr = dateTimesArr.filter(Boolean)
         const filterEventsArr = userEventsArr.filter(Boolean)
+        const filterValuesArr = formValuesArray.filter(Boolean)
+
+        function mapBothValues(arr) {
+            arr.map((entries) => {
+                urlencoded.append('events1', `${entries.event}`)
+                urlencoded.append('date', `${entries.date}`)
+            })
+        } // this data comes from the create new event button
+        mapBothValues(filterValuesArr)
+
+        if(!filterEventsArr[0] === undefined){
+            return
+        }
+        if(!filterDatesArr[0] === undefined){
+            return
+        }
+        mapEvents2(filterEventsArr)
+        mapEventsDate(filterDatesArr) // this data comes from pre-existing events1 & date data from our user
+        
 
         function mapEvents2(arr){
             arr.map((events) => {
                 urlencoded.append('events1', `${events}`)
             })
         }
-        mapEvents2(filterValueArr)
-        if(!filterEventsArr[0] === undefined){
-            return
+        function mapEventsDate(arr) {
+            arr.map((date) => {
+                urlencoded.append('date', `${date}`)
+            })
         }
-        mapEvents2(filterEventsArr)
+        // mapEvents2(filterValueArr)
+        
+        // mapDates(datesArray)
+        // console.log('map dates array' + mapDates(datesArray))
         
         
         // urlencoded.append('username', `${user}`)
@@ -80,30 +126,30 @@ newEventButton.addEventListener('click', () => {
         
         const card1 = document.createElement('div')
             card1.className = "container col-6"
-            card1.innerHTML = `<a href="/dashboarduser/${user}/${text}"><h2><div class="card border-danger mb-3" style="max-width: 18rem;">
-            <div class="card-header">${user}'s Event</div></a>
+            card1.innerHTML = `<h2><a href="/dashboarduser/${user}/${formValues.event}"><div class="card border-danger mb-3" style="max-width: 18rem;">
+            <div class="card-header">${user}'s Event</div></a></h2>
+        
             <div class="card-body text-danger">
-            <h5 class="card-title">Date Here</h5>
-            <p class="card-text">${text}</p>
+            <h5 class="card-title">${formValues.event}</h5>
+            <p class="card-text">${formValues.date} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+            </svg></p>
+            
             </div>
             <div class="row">
-            <div class="container col-6">
+            <div class="container col-12">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
                 </svg>
-            </div>
-            <div class="container col-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
-                </svg>
+                <p>Remove</p>
             </div>
             </div>
             `
             h1EventsRow.appendChild(card1)
 
 
-
+    console.log();
 
     }
     })()
@@ -174,20 +220,29 @@ tempBtn.addEventListener('click', () => {
 
 
 let h1EventsList = document.getElementById('eventslist')
+let dList = document.getElementById('date')
 let h1Inner = h1EventsList.innerHTML
-let eventsArr = []
+let dateInner = dList.innerHTML
+let eventsArr = [];
+let dateArr = [];
 let currentEventsArray = h1Inner.split(',')
+let currentDatesArray = dateInner.split(',')
 currentEventsArray.filter(Boolean) //filters out empty array values
+currentDatesArray.filter(Boolean) //filters out empty array values
 eventsArr.push(currentEventsArray)
-console.log(typeof(eventsArr))
+dateArr.push(currentDatesArray)
 
-console.log('current events array: ' + currentEventsArray[1]);
+
+
+console.log(typeof(eventsArr))
+console.log('current events array: ' + currentEventsArray);
 console.log(currentEventsArray.length);
 
-    
+console.log(dateArr);
 for(let i=0; i < currentEventsArray.length; i++){
     let events = currentEventsArray[i]
-    
+    let dat = currentDatesArray[i]
+    console.log(dat);
     
 
     const card = document.createElement('div')
@@ -195,8 +250,11 @@ for(let i=0; i < currentEventsArray.length; i++){
     card.innerHTML = `<h2><a href="/dashboarduser/${user}/${events}"><div class="card border-danger mb-3" style="max-width: 18rem;">
 <div class="card-header">${user}'s Event</div></a></h2>
 <div class="card-body text-danger">
-  <h5 class="card-title"></h5>
-  <p class="card-text">${events}</p>
+  <h5 class="card-title">${events}</h5>
+  <p class="card-text">${dat} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+  </svg></p>
 </div>
 <div class="row">
   <div class="container col-12">
@@ -230,7 +288,7 @@ remEvent.forEach(link => link.addEventListener('click', () => {
 
     (async () => {
         let { value: isConfirmed } = await Swal.fire({
-        title: `Are you sure you want to remove event ${events}?`,
+        title: `Are you sure you want to remove event "${events}"?`,
         text: "You won't be able to revert this!",
         showCancelButton: true,
         confirmButtonColor: '#DC143C',
@@ -239,13 +297,21 @@ remEvent.forEach(link => link.addEventListener('click', () => {
     })
     if(isConfirmed){
         Swal.fire(
-            'Event deleted!',
-            'Your event has been removed.',
+            `"${events}" Event deleted!`,
+            `Your event "${events}" has been removed.`,
             'success',
         )
         console.log('aaa ' + isConfirmed) // works
 
         // fetch
+        fetch(`/dashboard/${events}`, {
+            method: 'DELETE',
+    
+        }).then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error))
+
+    
 
     }
     })()
