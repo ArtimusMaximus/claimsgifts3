@@ -1,12 +1,12 @@
 import express from 'express';
 import routes from './src/routes/crmRoutes';
-import path from 'path'
+import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local'
 import session from 'express-session';
-import { User, Event, Gift } from "/home/amiv/buildrestapinode/src/models/users";
+import { User, Event, Gift } from "/home/amiv/projects/claimsgifts/src/models/users";
 
 const app = express();
 const PORT = 4000;

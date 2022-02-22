@@ -12,6 +12,7 @@ let innerEvents = document.getElementById('eventslist')
 let dateList = document.getElementById('date')
 const dateTimes = dateList.innerHTML
 const userEvents = innerEvents.innerHTML
+console.log('datelist innerhtml' + dateTimes);
 console.log('innerevents innerhtml: ' + userEvents);
 console.log('userevents.split at comma: ' + userEvents.split(","))
 console.log(typeof( 'type of' + userEvents)); //user events is type string
@@ -86,10 +87,10 @@ newEventButton.addEventListener('click', () => {
         if(!filterEventsArr[0] === undefined){
             return
         }
+        mapEvents2(filterEventsArr)
         if(!filterDatesArr[0] === undefined){
             return
         }
-        mapEvents2(filterEventsArr)
         mapEventsDate(filterDatesArr) // this data comes from pre-existing events1 & date data from our user
         
 
@@ -149,10 +150,10 @@ newEventButton.addEventListener('click', () => {
             h1EventsRow.appendChild(card1)
 
 
-    console.log();
+    
 
     }
-    })()
+    })().catch(error => console.log(error))
     console.log('textvaluearray: ' + textValueArray)
 })
 
@@ -225,12 +226,13 @@ let h1Inner = h1EventsList.innerHTML
 let dateInner = dList.innerHTML
 let eventsArr = [];
 let dateArr = [];
+
 let currentEventsArray = h1Inner.split(',')
 let currentDatesArray = dateInner.split(',')
-currentEventsArray.filter(Boolean) //filters out empty array values
-currentDatesArray.filter(Boolean) //filters out empty array values
-eventsArr.push(currentEventsArray)
-dateArr.push(currentDatesArray)
+let filteredEvents = currentEventsArray.filter(Boolean) //filters out empty array values
+let filteredDates = currentDatesArray.filter(Boolean) //filters out empty array values
+// eventsArr.push(currentEventsArray)
+// dateArr.push(currentDatesArray)
 
 
 
@@ -239,9 +241,10 @@ console.log('current events array: ' + currentEventsArray);
 console.log(currentEventsArray.length);
 
 console.log(dateArr);
-for(let i=0; i < currentEventsArray.length; i++){
-    let events = currentEventsArray[i]
-    let dat = currentDatesArray[i]
+for(let i=0; i < filteredEvents.length; i++){
+    let events = filteredEvents[i]
+    let dat = filteredDates[i]
+    console.log(events);
     console.log(dat);
     
 
@@ -311,10 +314,21 @@ remEvent.forEach(link => link.addEventListener('click', () => {
         .then(result => console.log(result))
         .catch(error => console.log('error', error))
 
-    
+        h1EventsRow.removeChild(card)
+
+        const urlencoded = new URLSearchParams();
+        const filtEvents = filteredEvents.filter(item => item !== `${events}`)
+        const filtDates = filteredDates.filter(item => item !== `${dat}`)
+        urlencoded.append('events1', filtEvents)
+        urlencoded.append('date', filtDates)
+
+        fetch(`/dashboarduser/${userid}`, {
+            method: 'PUT',
+            body: urlencoded,
+        })
 
     }
-    })()
+    })().catch(error => console.log(error))
     
 }))
 

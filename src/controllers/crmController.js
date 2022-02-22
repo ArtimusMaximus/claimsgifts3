@@ -2,7 +2,7 @@ import res from 'express/lib/response';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { ContactSchema, giftSchema, NewUserSchema } from '../models/crmModel';
-import { User, Event, Gift } from "/home/amiv/buildrestapinode/src/models/users";
+import { User, Event, Gift } from "/home/amiv/projects/claimsgifts/src/models/users";
 
 const Contact = mongoose.model('Contact', ContactSchema);
 const giftS = mongoose.model('Nested', giftSchema)
