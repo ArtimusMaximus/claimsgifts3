@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= events1 %></title>
+    <title><%= eventname %></title>
     <link rel="stylesheet" href="/styles1.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Tangerine">
@@ -72,12 +72,18 @@
             <input type="text" id="datainput1" name="giftx" onfocus="this.placeholder=''" onblur="this.placeholder='Gift Name'" placeholder="Gift Name">
             <input type="text" id="datainput2" name="giftLinkx" onfocus="this.placeholder=''" onblur="this.placeholder='Add Link'" placeholder="Add Link">
             <button type="button" id="submitbutton1" class="btn btn-lg">Add Gift&nbsp;</button>
-            <hr>
-            <a href="/dashboarduser">AAAAAAAAA</a>
-            <a href="/dashboarduser">Share Event</a>
         </form>
+        <div class="row">
+            <hr>
+            <a href="/dashboarduser">Back to Dashboard</a>
+            <div class="container">
+                <button id="sharelink" type="button" class="btn btn-small" style="color: crimson;">Copy to Clipboard</button>
+            </div>
+        </div>
     </div>               
-        <div id="data"></div>
+        <div id="data">
+            
+        </div>
                         
             
     </div>
@@ -87,6 +93,7 @@
     <p hidden id="eventid"><%=event %></p>
     <p hidden id="usernameid"><%=user %></p>
     <p hidden id="ename"><%=eventname %></p>
+    <p hidden id="claimee"><%=claimee %></p>
     <iframe name="frame"></iframe>
     
    

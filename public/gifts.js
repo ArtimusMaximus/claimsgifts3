@@ -48,10 +48,12 @@ window.addEventListener("load", () => {
             btn.className = "btn btn-lg btn-outline-danger"
             btn.innerHTML = "Remove Gift"
             btn2.innerHTML = 'Claim Gift'
+            btn2.id = 'claimbtn'
             // btn3.innerHTML = 'Add a Gift'
             let dataDiv = document.getElementById('data')
             let coData = data[i]
             console.log('codata: ', coData);
+            console.log('type of codata: ', typeof(coData));
             let giftz = data[i].giftx
             let giftLinkz = data[i].giftLinkx
 
@@ -74,30 +76,56 @@ window.addEventListener("load", () => {
             <p class="card-text"><h1> <a href="${giftLinkz}">${giftLinkz}</a></h1></p>
             </div>`
             
-            
             dataDiv.appendChild(divCard)
             dataDiv.appendChild(btn)
             dataDiv.appendChild(btn2)
-            // dataDiv.appendChild(btn3)
+
             
-            btn.addEventListener('click', () => {
-                fetch(`/dashboarduser/${id}`, {
-                    method: 'DELETE',
-                    
-                })
-                .then
-            // btn.addEventListener('click', () => {
-            //     fetch(`/contact/${id2}`, {
-            //         method: 'DELETE',
-                    
-            //     })
-                console.log('Gift entry Deleted.')
-                dataDiv.removeChild(divCard)
-                dataDiv.removeChild(btn)
-                dataDiv.removeChild(btn2)
-                // dataDiv.removeChild(btn3)
-            });
-        }
+            let isClaimed = document.getElementById('claimee')
+            let claimee = isClaimed.innerHTML
+                
+            btn2.addEventListener('click', () => {
+                if(data[i].claimee.length === 0){
+
+                    (async () => {
+                        let { value: isConfirmed } = await Swal.fire({
+                            title: `Claim this gift with your name ${username} on it?`,
+                            confirmButtonColor: 'crimson',
+                            showCancelButton: true,
+                        })
+                        if(isConfirmed){
+                            Swal.fire(`Item claimed by ${username}`)
+
+                            const urlencoded = new URLSearchParams();
+                            urlencoded.append('claimee', `${username}`)
+
+                            fetch(`/dashboard/${id}`, {
+                                method: 'PUT',
+                                body: urlencoded
+                            })
+                        }
+                                
+                    })()
+                } else {
+                    Swal.fire(`This item has already been claimed by user ${data[i].claimee}`)
+                }
+
+            
+            
+                btn.addEventListener('click', () => {
+                    fetch(`/dashboarduser/${id}`, {
+                        method: 'DELETE',
+                        
+                    })
+                    .then
+                
+                    console.log('Gift entry Deleted.')
+                    dataDiv.removeChild(divCard)
+                    dataDiv.removeChild(btn)
+                    dataDiv.removeChild(btn2)
+                    // dataDiv.removeChild(btn3)
+                });
+            }) // end for loop of initial appended data
 
         
         //Post Method
@@ -115,7 +143,7 @@ window.addEventListener("load", () => {
         //     }
         // }
         // toggleList()
-    }
+        }
     //post modetho
     // const myHeaders = new Headers();
     //     myHeaders.append("Content-Type", "x-www-form-urlencoded");
@@ -137,9 +165,9 @@ window.addEventListener("load", () => {
     // btn3.addEventListener('click', () => {
     //     addGiftButton()
     //     console.log('btn3 clicked');
-        
-    // })
-})
+        // })
+    }
+}) // end of window event listener fetch, append data
 
 const submitButton = document.getElementById('submitbutton1')
         submitButton.addEventListener('click', () => {
@@ -155,11 +183,12 @@ const submitButton = document.getElementById('submitbutton1')
             let username = document.getElementById('usernameid').innerHTML
 
             
+
             
             // const raw = JSON.stringify({firstName, lastName})
             // const raw2 = JSON.stringify({gift, giftLink})
             // console.log('raw', raw2)
-            submitButton.onclick = console.log('it works but wtf')
+            
             
             console.log('type', typeof(giftLink));
 
@@ -174,8 +203,24 @@ const submitButton = document.getElementById('submitbutton1')
             urlencoded.append('event', `${eventname}`)
             urlencoded.append('username', `${username}`)
 
-            // urlencoded.append("phone", "33333");
+            // if(gift.length === 0 || giftLink.length === 0){
+            //     return
+            // }
 
+            if(gift === '' || giftLink === ''){
+                // return alert('Plz fill out both') 
+                Swal.fire({
+                // icon:'warning',
+                // iconColor: 'crimson',
+                title: 'Oops...',
+                html: '<h1><strong>Both fields must contain a value!</strong></h1>',
+                // color: 'crimson',
+                confirmButtonText: '<i class="fa fa-thumbs-up"></i> <h1>Great!<h1>',
+                confirmButtonColor: 'crimson',
+                });
+
+                return
+            }
             
 
             var requestOptions = {
@@ -189,22 +234,7 @@ const submitButton = document.getElementById('submitbutton1')
             .then(response => response.json())
             
             .then(result => {
-                if(gift === "" || giftLink === ""){
-                    // return alert('Plz fill out both') 
-                    Swal.fire({
-                    icon:'warning',
-                    iconColor: 'crimson',
-                    title: 'Oops...',
-                    html: '<h1><strong>Both fields must contain a value!</strong></h1>',
-                    color: 'crimson',
-                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> <h1>Great!<h1>',
-                    confirmButtonColor: 'crimson',
-                    });
-                    return
-                }
-                document.getElementById('datainput1').value = ""
-                document.getElementById('datainput2').value = ""
-                
+ 
                 const id = result._id
                 const btn = document.createElement('button')
                 const btn2 = document.createElement('button')
@@ -213,14 +243,15 @@ const submitButton = document.getElementById('submitbutton1')
                 btn.className = "btn btn-lg btn-outline-danger"
                 btn.innerHTML = 'Remove Gift'
                 btn2.innerHTML = 'Claim Gift'
-                
+                btn2.id = 'claimbtn'
 
-                
+                // let giftLinkFiltered = giftLink.filter(Boolean)
+                // let giftFiltered = gift.filter(Boolean)
 
-            
                 console.log(id);
                 console.log('result: ' + result);
 
+                
                 let giftzz = result
                 // const giftzz = result.company
                 // console.log('giftz = result.company: ', giftz);
@@ -240,9 +271,12 @@ const submitButton = document.getElementById('submitbutton1')
                 // divCard.appendChild(btn)
                 // dataDiv.appendChild(p)
                 // dataDiv.appendChild(btn)
+
+                document.getElementById('datainput1').value = ""
+                document.getElementById('datainput2').value = ""
+
                 
-                // console.log('this is the result ', result)
-                
+
                 btn.addEventListener('click', () => {
                     
                     fetch(`/contact/${id}`, {
@@ -257,9 +291,27 @@ const submitButton = document.getElementById('submitbutton1')
                 
             }).catch(err => console.log(err))
 
-            
-            
-        })
+        }) // end of submit button POST, append, & DEL
 
 
+const shareLinkBtn = document.getElementById('sharelink')
+shareLinkBtn.addEventListener('click', () => {
+    let url = location.href
+    navigator.clipboard.writeText(url)
+})
+
+
+
+
+
+
+
+// console.log(globalThis)
+// console.log(window)
+let ql = document.querySelector('h1')
+// console.log(ql);
+console.log(location.href);
+// remember outerHeight and outerWidth for your background
+
+// look into benchmarking queries from mongodb, and also indexing Simple and Compound! ANswered by a PRO
 

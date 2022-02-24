@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local'
 import session from 'express-session';
-import { User, Event, Gift } from "/home/amiv/projects/claimsgifts/src/models/users";
+import { User, Event, Gift } from "/home/amiv/projects/claimsgifts2/src/models/users";
 
 const app = express();
 const PORT = 4000;
@@ -137,7 +137,7 @@ app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
 app.get(`/dashboarduser/:username/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
     res.setHeader("Content-Type", "text/html; charset=UTF-8")
     // reqUser = req.user.username
-    res.render('gifts', {user: req.user.username, date: req.user.date, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event})
+    res.render('gifts', {user: req.user.username, date: req.user.date, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event, claimee: req.user.claimee})
     
 })
 // app.get('/dashboarduser/:event', (req, res) => {

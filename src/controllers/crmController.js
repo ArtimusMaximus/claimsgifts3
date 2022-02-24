@@ -2,7 +2,7 @@ import res from 'express/lib/response';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { ContactSchema, giftSchema, NewUserSchema } from '../models/crmModel';
-import { User, Event, Gift } from "/home/amiv/projects/claimsgifts/src/models/users";
+import { User, Event, Gift } from "/home/amiv/projects/claimsgifts2/src/models/users";
 
 const Contact = mongoose.model('Contact', ContactSchema);
 const giftS = mongoose.model('Nested', giftSchema)
@@ -227,4 +227,13 @@ export const deleteEventGifts = ((req, res) => {
         }
         res.send({message: `all items related to ${event} have been deleted`})
     })
+})
+
+export const updateGiftClaimee = ((req, res) => {
+    Gift.findOneAndUpdate({_id: req.params.giftID}, req.body, {new: true}, ((err, claimee) => {
+        if(err){
+            res.send(err)
+        }
+        res.json(claimee)
+    }))
 })

@@ -217,6 +217,7 @@ tempBtn.addEventListener('click', () => {
         redirect: 'follow',
     })
 })
+//the idea is that we can save the params, and simply have a list of URLs you have been invited to participate in
 
 
 

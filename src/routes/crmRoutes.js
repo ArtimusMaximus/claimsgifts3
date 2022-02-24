@@ -21,6 +21,7 @@ import { addNewContact,
         getGift2,
         getGiftById,
         deleteEventGifts,
+        updateGiftClaimee,
 
 } from '../controllers/crmController';
 
@@ -85,6 +86,12 @@ const routes = (app) => {
         .delete(removeGift) //delete works
 
         .get(getGiftById) //this does not work yet
+
+    app.route('/dashboard/:giftID')
+        
+        .get(getGiftById) // I don't believe this works
+
+        .put(updateGiftClaimee)
 
        
 }

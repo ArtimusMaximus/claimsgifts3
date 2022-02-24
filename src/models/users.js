@@ -24,7 +24,8 @@ let giftSchema = new Schema({
     giftx: String,
     giftLinkx: String,
     event: String,
-    username: String
+    username: String,
+    claimee: [String],
 
 });
 
