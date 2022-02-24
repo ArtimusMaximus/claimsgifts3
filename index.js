@@ -9,7 +9,7 @@ import session from 'express-session';
 import { User, Event, Gift } from "/home/amiv/projects/claimsgifts2/src/models/users";
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const router = express.Router();
 
 

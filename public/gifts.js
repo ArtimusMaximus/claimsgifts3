@@ -94,7 +94,11 @@ window.addEventListener("load", () => {
                             showCancelButton: true,
                         })
                         if(isConfirmed){
-                            Swal.fire(`Item claimed by ${username}`)
+                            Swal.fire({
+                                title:    `Item claimed by ${username}`,
+                                confirmButtonColor: 'crimson',
+                                confirmButtonText: 'Got it',
+                            })
 
                             const urlencoded = new URLSearchParams();
                             urlencoded.append('claimee', `${username}`)
@@ -106,11 +110,21 @@ window.addEventListener("load", () => {
                         }
                                 
                     })()
-                } else {
-                    Swal.fire(`This item has already been claimed by user ${data[i].claimee}`)
-                }
 
-            
+                } else if(username === data[i].claimee.toString()) {
+                    Swal.fire({
+                        title: 'You have already claimed this item!',
+                        confirmButtonColor: 'crimson',
+                    })
+                } else {
+                    Swal.fire({
+                       title: `This item has already been claimed by user ${data[i].claimee}`,
+                       confirmButtonColor: 'crimson',
+                    })
+                }
+                console.log('username: ' + typeof(username), 'data[i].claimee ' + typeof(data[i].claimee))
+                 
+
             
                 btn.addEventListener('click', () => {
                     fetch(`/dashboarduser/${id}`, {
