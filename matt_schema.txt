@@ -1,0 +1,27 @@
+{
+  "events": [
+    {
+      "eventId": "123123
+      "eventDate": "2022-02-04",
+      "gifts": [
+        {
+          "giftId": 1,
+          "isClaimed": false,
+          "giftName": "Cheese"
+        }
+       ]
+    }
+}
+
+{
+  ...
+  "gifts: [
+    {
+       "giftId": ...,
+       "claims": [
+       {
+          "amount": "5.00",
+          "currency": "US"
+          "userId": aebcef
+       }
+]}
