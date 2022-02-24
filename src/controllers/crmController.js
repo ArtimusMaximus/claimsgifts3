@@ -221,7 +221,7 @@ export const getGiftById = (req, res) => {
 }
 
 export const deleteEventGifts = ((req, res) => {
-    Gift.deleteMany({event: req.params.event}).then((err, event) => {
+    Gift.deleteMany({event: req.params.event}, (err, event) => {
         if(err){
             res.send(err)
         }
