@@ -137,7 +137,7 @@ app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
 app.get(`/dashboarduser/:username/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
     res.setHeader("Content-Type", "text/html; charset=UTF-8")
     // reqUser = req.user.username
-    res.render('gifts', {user: req.user.username, date: req.user.date, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event, claimee: req.user.claimee})
+    res.render('gifts', {user: req.user.username, date: req.user.date, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event, claimee: req.user.claimee, claimedStatus: req.user.claimed})
     
 })
 // app.get('/dashboarduser/:event', (req, res) => {

@@ -76,8 +76,8 @@
         <div class="row">
             <hr>
             <a href="/dashboarduser">Back to Dashboard</a>
-            <div class="container">
-                <button id="sharelink" type="button" class="btn btn-small" style="color: crimson;">Copy to Clipboard</button>
+            <div class="row">
+                <button id="sharelink" type="button" class="btn btn-small" style="color: crimson;" data-toggle="tooltip" data-placement="bottom" title="Copy URL">Copy URL to share</button>
             </div>
         </div>
     </div>               
@@ -94,6 +94,7 @@
     <p hidden id="usernameid"><%=user %></p>
     <p hidden id="ename"><%=eventname %></p>
     <p hidden id="claimee"><%=claimee %></p>
+    <p hidden id="claimedstatus"><%=claimedStatus %></p>
     <iframe name="frame"></iframe>
     
    

@@ -1,4 +1,5 @@
- import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
+
+import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
 
 window.addEventListener("load", () => {
 
@@ -33,7 +34,7 @@ window.addEventListener("load", () => {
     }
     fetchList();
     
-
+    
     const idArray = [];
     const giftArray = [];
     const linkArray = [];
@@ -85,7 +86,10 @@ window.addEventListener("load", () => {
             let claimeeInner = isClaimed.innerHTML
                 
             btn2.addEventListener('click', () => {
-                if(data[i].claimee.length === 0){
+                console.log(data[i].claimee)
+                console.log(data[i].claimee.length)
+                console.log(username)
+                if(data[i].claimee.length === 0 || data[i].claimee[0] === ''){
 
                     (async () => {
                         let { value: isConfirmed } = await Swal.fire({
@@ -100,21 +104,52 @@ window.addEventListener("load", () => {
                                 confirmButtonText: 'Got it',
                             })
 
+                            data[i].claimee[0] = username
+
+                            var myHeaders = new Headers();
+                            myHeaders.append("Content-Type", "application/x-www-form-urlencoded")
+
                             const urlencoded = new URLSearchParams();
                             urlencoded.append('claimee', `${username}`)
+                            urlencoded.append("claimed", true)
 
                             fetch(`/dashboard/${id}`, {
                                 method: 'PUT',
-                                body: urlencoded
+                                headers: myHeaders,
+                                body: urlencoded,
+                                redirect: 'follow',
                             })
                         }
           
                     })()
 
-                } else if(username === data[i].claimee.toString()) {
+                } else if(data[i].claimee[0] === username) { //data[i].claimee.toString()
                     Swal.fire({
-                        title: 'You have already claimed this item!',
+                        title: '<h1 style="color: crimson;">You have already claimed this item!</h1>',
+                        text: 'Do you wish to unclaim it?',
                         confirmButtonColor: 'crimson',
+                        confirmButtonText: 'Cancel',
+                        showCancelButton: true,
+                        cancelButtonText: 'Unclaim Gift',
+                    }).then((result) => {
+                        if(result.dismiss){
+                            data[i].claimee[0] = ''
+                            // claimeeInner = ''
+                            const urlencoded = new URLSearchParams();
+                            // urlencoded.append("claimee", [])
+                            urlencoded.append("claimed", false)
+                            fetch(`/dashboard/${id}`, {
+                                method: 'PUT',
+                                body: urlencoded
+                            })
+                            // fetch(`/dashboarduser/${id}`, {
+                            //     method: 'DELETE',
+                            //     body: urlencoded
+                            // })
+                            Swal.fire('Gift has been unclaimed')
+                            
+                            
+                        }
                     })
                 } else {
                     Swal.fire({
@@ -123,6 +158,14 @@ window.addEventListener("load", () => {
                     })
                 }
                 console.log('username: ' + typeof(username), 'data[i].claimee ' + typeof(data[i].claimee))
+
+                // const urlencoded = new URLSearchParams();
+                // urlencoded.append('claimed', true)
+
+                // fetch(`/dashboarduser/${id}`, {
+                //     method: 'PUT',
+                //     body: urlencoded
+                // })
 
             }) // end for loop of initial appended data
 
@@ -182,7 +225,7 @@ window.addEventListener("load", () => {
     }
 }) // end of window event listener fetch, append data
 
-const submitButton = document.getElementById('submitbutton1')
+        const submitButton = document.getElementById('submitbutton1')
         submitButton.addEventListener('click', () => {
             
             const dataDiv = document.getElementById('data')
@@ -231,11 +274,9 @@ const submitButton = document.getElementById('submitbutton1')
                 confirmButtonText: '<i class="fa fa-thumbs-up"></i> <h1>Great!<h1>',
                 confirmButtonColor: 'crimson',
                 });
-
                 return
             }
             
-
             var requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -289,17 +330,23 @@ const submitButton = document.getElementById('submitbutton1')
                 document.getElementById('datainput2').value = ""
 
 
-            
+                let claimedStatus1 = document.getElementById('claimedstatus')
+                let claimedStatusInner = claimedStatus1.innerHTML
                 let isClaimed = document.getElementById('claimee')
                 let claimeeInner = isClaimed.innerHTML
-                console.log(claimeeInner)
-                
+                console.log(claimeeInner === true) //initial status = false
+                console.log(claimeeInner.length) // initial status = 0
+                console.log(typeof(claimeeInner))
+                console.log(claimedStatusInner)
+                console.log(claimedStatusInner === true)
+                console.log(typeof(claimedStatusInner))
+                // try using split on claimeeInner and then taking it from there
 
                 btn2.addEventListener('click', () => {
                     // let claimee = result.claimee
                     // console.log('claimee length' + claimee.length)
                     // console.log('claimee length' + claimee)
-                    if(claimeeInner.length === 0){
+                    if(claimeeInner.length === 0 || claimeeInner === ''){ //claimeeInner.length === 0 //claimedStatusInner
 
                         (async () => {
                             let { value: isConfirmed } = await Swal.fire({
@@ -309,13 +356,14 @@ const submitButton = document.getElementById('submitbutton1')
                             })
                             if(isConfirmed){
                                 Swal.fire({
-                                    title:    `Item claimed by ${result.username}`,
+                                    title: `Item claimed by ${result.username}`,
                                     confirmButtonColor: 'crimson',
                                     confirmButtonText: 'Got it',
                                 })
 
                                 const urlencoded = new URLSearchParams();
                                 urlencoded.append('claimee', `${result.username}`)
+                                urlencoded.append("claimed", "true")
 
                                 fetch(`/dashboard/${id}`, {
                                     method: 'PUT',
@@ -328,8 +376,29 @@ const submitButton = document.getElementById('submitbutton1')
 
                     } else if(result.username === claimeeInner) {
                         Swal.fire({
-                            title: 'You have already claimed this item!',
+                            title: '<h1 style="color: crimson;">You have already claimed this item!</h1>',
+                            text: 'Do you wish to unclaim it?',
                             confirmButtonColor: 'crimson',
+                            confirmButtonText: 'Cancel',
+                            showCancelButton: true,
+                            cancelButtonText: 'Unclaim Gift',
+                        }).then((result) => {
+                            if(result.dismiss){
+                                claimeeInner = ''
+                                const urlencoded = new URLSearchParams();
+                                urlencoded.append("claimee", [])
+                                urlencoded.append("claimed", false)
+                                fetch(`/dashboard/${id}`, {
+                                    method: 'PUT',
+                                    body: urlencoded
+                                })
+                                // fetch(`/dashboarduser/${id}`, {
+                                //     method: 'DELETE',
+                                //     body: urlencoded
+                                // })
+                                Swal.fire('Gift has been unclaimed')
+                                
+                            }
                         })
                     } else {
                         Swal.fire({
@@ -345,9 +414,6 @@ const submitButton = document.getElementById('submitbutton1')
                     // console.log('result.username result.claimee equal? ' + result.username === claimee.toString())
                     // console.log(claimeeInner)
                 })
-
-
-
 
                 btn.addEventListener('click', () => {
                     
@@ -371,11 +437,6 @@ shareLinkBtn.addEventListener('click', () => {
     let url = location.href
     navigator.clipboard.writeText(url)
 })
-
-
-
-
-
 
 
 // console.log(globalThis)

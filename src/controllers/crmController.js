@@ -235,5 +235,6 @@ export const updateGiftClaimee = ((req, res) => {
             res.send(err)
         }
         res.json(claimee)
+        console.log(claimee)
     }))
 })

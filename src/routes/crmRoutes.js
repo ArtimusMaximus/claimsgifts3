@@ -71,7 +71,7 @@ const routes = (app) => {
 
     app.route('/dashboarduser/:userID')
 
-    //     .get(getUserByID)
+        .get(getUserByID)
 
         .put(updateUser) //this updates our event list
 

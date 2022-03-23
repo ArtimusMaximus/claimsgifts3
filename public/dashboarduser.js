@@ -1,3 +1,4 @@
+
 import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@8/src/sweetalert2.js'
 // import axios from 'https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.js';
 // import qs from 'https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.js';
@@ -215,39 +216,56 @@ newEventButton.addEventListener('click', () => {
 
 
 const loadExistingEventButton = document.getElementById('div4')
-loadExistingEventButton.addEventListener('click', () => {
-    (() => {
-        fetch('/dashboarduser/:username/:eventname')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            appendData(data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    })()
+// loadExistingEventButton1.addEventListener('click', () => {
+//     (() => {
+//         fetch('/dashboarduser/:username/:events1')
+//         .then((response) => {
+//             return response.json();
+//         })
+//         .then((data) => {
+//             appendData(data)
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//         })
+//     })()
 
-    const eventArray = [];
-    const appendData = data => {
-        for(let i = 0; i < data.length; i++){
-           const allEvents = data[i].events
-           const eventsId = data[i]._id
-           eventArray.push(data[i].events)
+//     const eventArray = [];
+//     const appendData = data => {
+//         for(let i = 0; i < data.length; i++){
+//            const allEvents = data[i].events
+//            const eventsId = data[i]._id
+//            eventArray.push(data[i].events)
            
-           let eventsRow = document.getElementById('eventsrow')
-           let p = document.createElement('p')
-           let btn = document.createElement('button')
-           btn.setAttribute("class", "btn-lg")
-           p.innerHTML = `<a href='/dashboarduser/${eventsId}'>${allEvents}</a>`
-           btn.appendChild(p)
-           eventsRow.appendChild(btn)
-        }
-        console.log(typeof(eventArray), eventArray)
-        console.log(eventArray[2])
-    }
-})
+//            let eventsRow = document.getElementById('eventsrow')
+//            let p = document.createElement('p')
+//            let btn = document.createElement('button')
+//            btn.setAttribute("class", "btn-lg")
+//            p.innerHTML = `<a href='/dashboarduser/${eventsId}'>${allEvents}</a>`
+//            btn.appendChild(p)
+//            eventsRow.appendChild(btn)
+//         }
+//         console.log(typeof(eventArray), eventArray)
+//         console.log(eventArray[2])
+//     }
+// })
+//************************************************** */
+const tempArr = [1,2,3,4,5,6]
+
+const mapEventsToPopup = userEventsArr.map(item => `<li>${item}</li>`)
+console.log(mapEventsToPopup)
+
+loadExistingEventButton.addEventListener('click', (() => {
+    Swal.fire({
+        title: 'This works',
+        // text: `<ul> ${mapEventsToPopup} </ul>`,
+        html: `<ul> ${mapEventsToPopup} </ul>`
+    })
+}) )
+
+
+
+
 // maybe use this later, so as not to load all the events at once
 
 // let url = new URL('http://localhost:4000')
