@@ -19,7 +19,9 @@ console.log('userevents.split at comma: ' + userEvents.split(","))
 console.log(typeof( 'type of' + userEvents)); //user events is type string
 
 let dateTimesArr = dateTimes.split(",")
+let dateTimesArr2 = dateTimesArr //dateTimes.split(",")
 let userEventsArr = userEvents.split(",")
+let userEventsArr2 = userEventsArr //userEvents.split(",")
 console.log('usereventsarr: ' + userEventsArr);
 
 let h1EventsRow = document.getElementById('eventsrow')
@@ -60,8 +62,8 @@ newEventButton.addEventListener('click', () => {
         textValueArray.push(formValues.event)
         formValuesArray.push(formValues)
 
-        dateTimesArr.push(formValues.date)
-        userEventsArr.push(formValues.event)
+        filteredDates.push(formValues.date)
+        filteredEvents.push(formValues.event)
         let urlencoded = new URLSearchParams();
         // function mapEvents(){
         //     textValueArray.map((events) => {
@@ -263,10 +265,9 @@ const loadExistingEventButton = document.getElementById('div4')
 // }, [])
 console.log(dateTimesArr, textValueArray, formValuesArray)
 
-let dTimesArr;
 loadExistingEventButton.addEventListener('click', (() => {
     
-    dTimesArr = dateTimes.split(',')
+    let properDate = filteredDates.map(date => date.slice(5) + '-' + date.slice(0, 4))
     
     
     Swal.fire({
@@ -274,8 +275,8 @@ loadExistingEventButton.addEventListener('click', (() => {
         // text: `<ul> ${mapEventsToPopup} </ul>`,
         html: `<ul id="livent">
         ${
-            userEventsArr.map((arr, i) => {
-                return `<li><h5>${[arr + ' ', dateTimesArr[i]].join('')}</h5></li>`
+            filteredEvents.map((arr, i) => {
+                return `<li><h5>${[arr + ' ', properDate[i]].join('')}</h5></li>`
             }).join('')
         }
         </ul>`,
