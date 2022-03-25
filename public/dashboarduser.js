@@ -38,6 +38,7 @@ newEventButton.addEventListener('click', () => {
             inputPlaceholder: 'e.g. Christmas, Birthday, Wedding...',
             confirmButtonColor: 'crimson',
             typeColor: 'crimson',
+            showCancelButton: true,
             focusConfirm: false,
             preConfirm: () => {
                 return {
@@ -58,6 +59,9 @@ newEventButton.addEventListener('click', () => {
         datesArray.push(formValues.date)
         textValueArray.push(formValues.event)
         formValuesArray.push(formValues)
+
+        dateTimesArr.push(formValues.date)
+        userEventsArr.push(formValues.event)
         let urlencoded = new URLSearchParams();
         // function mapEvents(){
         //     textValueArray.map((events) => {
@@ -250,16 +254,31 @@ const loadExistingEventButton = document.getElementById('div4')
 //     }
 // })
 //************************************************** */
-const tempArr = [1,2,3,4,5,6]
 
-const mapEventsToPopup = userEventsArr.map(item => `<li>${item}</li>`)
-console.log(mapEventsToPopup)
+// userEventsArr.map((item) => {
+//     return `<li><h5>${item + ' ' + b}</h5></li>`
+// }).join('')
+// userEventsArr.reduce((acc, current, index) => {
+//     return [...acc, current, dTimesArr[index]].join('')
+// }, [])
+console.log(dateTimesArr, textValueArray, formValuesArray)
 
+let dTimesArr;
 loadExistingEventButton.addEventListener('click', (() => {
+    
+    dTimesArr = dateTimes.split(',')
+    
+    
     Swal.fire({
-        title: 'This works',
+        title: 'All events:',
         // text: `<ul> ${mapEventsToPopup} </ul>`,
-        html: `<ul> ${mapEventsToPopup} </ul>`
+        html: `<ul id="livent">
+        ${
+            userEventsArr.map((arr, i) => {
+                return `<li><h5>${[arr + ' ', dateTimesArr[i]].join('')}</h5></li>`
+            }).join('')
+        }
+        </ul>`,
     })
 }) )
 
