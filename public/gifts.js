@@ -6,9 +6,32 @@ window.addEventListener("load", () => {
     
     let eventname = document.getElementById('ename').innerHTML
     let username = document.getElementById('usernameid').innerHTML
+    let userid = document.getElementById('userid').innerHTML
+    let cby = document.getElementById('creator').innerHTML
+    
+    
+    
+    
+    // fetch(`/dashboarduser/${cby}`)
+    // .then((res) => {
+    //     return res.json();
+    // })
+    // .then((data) => {
+    //     gainData(data)
+    // })
+    // .catch((err) =>{
+    //     console.warn(err)
+    // })
+            
+    
+    // const gainData = data => {
+    //     let { createdby } = data
+    //     let cr8by = document.getElementById('creatorname')
+    //     cr8by.innerHTML = 'Event Created by ' + createdby
+    // }
     
     const fetchList = () => {
-        fetch(`/dashboard/${eventname}`)
+        fetch(`/dashboard/${userid}/${eventname}`)
         .then((response) => {
             return response.json();
         })
@@ -76,10 +99,14 @@ window.addEventListener("load", () => {
             <h1 class="card-title">${giftz}</h1>
             <p class="card-text"><h1> <a href="${giftLinkz}">${giftLinkz}</a></h1></p>
             </div>`
+
+            console.log(userid, id)
             
+            // if (username === data[i].username) 
             dataDiv.appendChild(divCard)
             dataDiv.appendChild(btn)
             dataDiv.appendChild(btn2)
+            
 
             
             let isClaimed = document.getElementById('claimee')
@@ -182,7 +209,7 @@ window.addEventListener("load", () => {
             });
 
 
-        }
+        } // end for loop
         
         //Post Method
     
@@ -222,7 +249,7 @@ window.addEventListener("load", () => {
     //     addGiftButton()
     //     console.log('btn3 clicked');
         // })
-    }
+    } // end of append data func expression
 }) // end of window event listener fetch, append data
 
         const submitButton = document.getElementById('submitbutton1')
@@ -284,7 +311,7 @@ window.addEventListener("load", () => {
             redirect: 'follow'
             };
 
-            fetch("/dashboarduser/:username/:events1", requestOptions)
+            fetch("/dashboarduser/:username/:userID/:events1", requestOptions)
             .then(response => response.json())
             
             .then(result => {

@@ -19,9 +19,8 @@ console.log('userevents.split at comma: ' + userEvents.split(","))
 console.log(typeof( 'type of' + userEvents)); //user events is type string
 
 let dateTimesArr = dateTimes.split(",")
-let dateTimesArr2 = dateTimesArr //dateTimes.split(",")
 let userEventsArr = userEvents.split(",")
-let userEventsArr2 = userEventsArr //userEvents.split(",")
+
 console.log('usereventsarr: ' + userEventsArr);
 
 let h1EventsRow = document.getElementById('eventsrow')
@@ -116,7 +115,7 @@ newEventButton.addEventListener('click', () => {
         // console.log('map dates array' + mapDates(datesArray))
         
         
-        // urlencoded.append('username', `${user}`)
+        urlencoded.append('createdby', `${user}`)
 
         console.log('text value array after urlencode append: ' + textValueArray)
         fetch(`/dashboarduser/${userid}`, {
@@ -131,14 +130,15 @@ newEventButton.addEventListener('click', () => {
         .then(result => console.log(result))  
         .catch(error => console.log(error))
         
+        let regularDate = (formValues.date.slice(5) + '-' + formValues.date.slice(0, 4))
         const card1 = document.createElement('div')
             card1.className = "container col-6"
-            card1.innerHTML = `<h2><a href="/dashboarduser/${user}/${formValues.event}"><div class="card border-danger mb-3" style="max-width: 18rem;">
+            card1.innerHTML = `<h2><a href="/dashboarduser/${user}/${userid}/${formValues.event}"><div class="card border-danger mb-3" style="max-width: 18rem;">
             <div class="card-header">${user}'s Event</div></a></h2>
         
             <div class="card-body text-danger">
             <h5 class="card-title">${formValues.event}</h5>
-            <p class="card-text">${formValues.date} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+            <p class="card-text">${regularDate} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
             <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
             </svg></p>
@@ -263,25 +263,7 @@ const loadExistingEventButton = document.getElementById('div4')
 // userEventsArr.reduce((acc, current, index) => {
 //     return [...acc, current, dTimesArr[index]].join('')
 // }, [])
-console.log(dateTimesArr, textValueArray, formValuesArray)
 
-loadExistingEventButton.addEventListener('click', (() => {
-    
-    let properDate = filteredDates.map(date => date.slice(5) + '-' + date.slice(0, 4))
-    
-    
-    Swal.fire({
-        title: 'All events:',
-        // text: `<ul> ${mapEventsToPopup} </ul>`,
-        html: `<ul id="livent">
-        ${
-            filteredEvents.map((arr, i) => {
-                return `<li><h5>${[arr + ' ', properDate[i]].join('')}</h5></li>`
-            }).join('')
-        }
-        </ul>`,
-    })
-}) )
 
 
 
@@ -325,8 +307,9 @@ let currentEventsArray = h1Inner.split(',')
 let currentDatesArray = dateInner.split(',')
 let filteredEvents = currentEventsArray.filter(Boolean) //filters out empty array values
 let filteredDates = currentDatesArray.filter(Boolean) //filters out empty array values
-// eventsArr.push(currentEventsArray)
-// dateArr.push(currentDatesArray)
+
+let filteredDates2 = [];
+let filteredEvents2 = [];
 
 
 
@@ -344,11 +327,11 @@ for(let i=0; i < filteredEvents.length; i++){
 
     const card = document.createElement('div')
     card.className = "container col-6"
-    card.innerHTML = `<h2><a href="/dashboarduser/${user}/${events}"><div class="card border-danger mb-3" style="max-width: 18rem;">
+    card.innerHTML = `<h2><a href="/dashboarduser/${user}/${userid}/${events}"><div class="card border-danger mb-3" style="max-width: 18rem;">
     <div class="card-header">${user}'s Event</div></a></h2>
     <div class="card-body text-danger">
     <h5 class="card-title">${events}</h5>
-    <p class="card-text">${dat} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+    <p class="card-text">${dat.slice(5) + '-' + dat.slice(0, 4)} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
     <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
     </svg></p>
@@ -413,6 +396,10 @@ for(let i=0; i < filteredEvents.length; i++){
             const urlencoded = new URLSearchParams();
             const filtEvents = filteredEvents.filter(item => item !== `${events}`)
             const filtDates = filteredDates.filter(item => item !== `${dat}`)
+
+            filteredDates2.push(filtDates)
+            filteredEvents2.push(filtEvents)
+
             urlencoded.append('events1', filtEvents)
             urlencoded.append('date', filtDates)
 
@@ -427,6 +414,58 @@ for(let i=0; i < filteredEvents.length; i++){
     }))
 
 } //end loop
+
+
+
+loadExistingEventButton.addEventListener('click', (() => {
+    
+    
+    fetch(`/dashboarduser/${userid}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/x-www-form-urlencoded'
+        }
+    })
+        .then(res => res.json())
+        .then(data => mapped(data))
+        .catch(err => console.log(err));
+
+    let mapped = data => {
+        let filteredDates2 = [];
+        let filteredEvents2 = [];
+
+        const { date, events1 } = data
+
+        let event12 = events1.toString()
+        let events12 = event12.split(',')
+        events12.forEach((event) => {
+            filteredEvents2.push(event)
+        })
+
+        let date2 = date.toString()
+        let dates2 = date2.split(',')
+        console.log(dates2);
+        dates2.forEach((date) => {
+            filteredDates2.push(date)
+        })
+
+        let properDate = filteredDates2.map(date => date.slice(5) + '-' + date.slice(0, 4))
+        Swal.fire({
+            title: 'All events:',
+            html: `<ul id="livent">
+            ${
+                filteredEvents2.map((arr, i) => {
+                    return `<li><h5>${[arr + ' ', properDate[i]].join('')}</h5></li>`
+                }).join('')
+            }
+            
+            </ul>`,
+        })
+    }
+    
+}))
+
+
 
 // let dateId = document.querySelectorAll('#adddate')
 // console.log(typeof(dateId))

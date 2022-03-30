@@ -58,6 +58,10 @@
       dialog{
         box-shadow: 0 0 15 black;
       }
+      h4 {
+        font-family: 'Tangerine', cursive;
+        font-size: 40px;
+      }
     </style>
 </head>
 <body>
@@ -68,7 +72,8 @@
             </div>
     </div>
     <div class="container">
-        <form action="/dashboarduser/:username/:events1" method="post" target="frame" id="subform">
+        <form action="/dashboarduser/:username/:userID/:events1" method="post" target="frame" id="subform">
+            <h4 id="creatorname">Event created by: <%=creatorName %></h4>
             <input type="text" id="datainput1" name="giftx" onfocus="this.placeholder=''" onblur="this.placeholder='Gift Name'" placeholder="Gift Name">
             <input type="text" id="datainput2" name="giftLinkx" onfocus="this.placeholder=''" onblur="this.placeholder='Add Link'" placeholder="Add Link">
             <button type="button" id="submitbutton1" class="btn btn-lg">Add Gift&nbsp;</button>
@@ -92,9 +97,11 @@
     <p hidden id="events1id"><%=events1 %></p>
     <p hidden id="eventid"><%=event %></p>
     <p hidden id="usernameid"><%=user %></p>
+    <p hidden id="userid"><%=userID %></p>
     <p hidden id="ename"><%=eventname %></p>
     <p hidden id="claimee"><%=claimee %></p>
     <p hidden id="claimedstatus"><%=claimedStatus %></p>
+    <p hidden id="creator"><%=creatorName %></p>
     <iframe name="frame"></iframe>
     
    

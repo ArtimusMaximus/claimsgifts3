@@ -194,7 +194,7 @@ export const removeGift = ((req, res) => {
 })
 
 export const getGift = ((req, res) => {
-    Gift.find({event: req.params.event}, (err, user) => {
+    Gift.find({ userID: req.params.userID, event: req.params.event }, (err, user) => {
         if(err){
             res.send(err)
         }
@@ -203,8 +203,17 @@ export const getGift = ((req, res) => {
 })
 
 export const getGift2 = ((req, res) => {
-    Gift.find({event: req.params.events1}, (err, user) => {
+    Gift.find({event: req.params.events1, username: req.user.username}, (err, user) => {
         if(err){
+            res.send(err)
+        }
+        res.json(user)
+    })
+})
+
+export const getGift3 = ((req, res) => {
+    Gift.find({user: req.user.username, events1: req.user.events1, userID: req.user._id}, (err, user) => {
+        if(err) {
             res.send(err)
         }
         res.json(user)

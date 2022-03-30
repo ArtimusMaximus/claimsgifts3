@@ -43,6 +43,7 @@ let NewUser1 = new Schema({
     username: { type: String, required: false },
     events1: [String],
     date: [String],
+    createdby: String
 });
 
 // NewUser1.methods.findSimilarType = function findSimilarType (cb) {

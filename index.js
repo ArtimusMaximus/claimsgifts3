@@ -134,12 +134,16 @@ app.get(`/dashboarduser`, isLoggedIn,  (req, res,) => {
     // res.setHeader("Content-Type", "text/javascript")
 })
 // let reqUser;
-app.get(`/dashboarduser/:username/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
+app.get(`/dashboarduser/:username/:userID/:events1`, isLoggedIn, (req, res) => {    //get this working at some point
     res.setHeader("Content-Type", "text/html; charset=UTF-8")
     // reqUser = req.user.username
-    res.render('gifts', {user: req.user.username, date: req.user.date, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event, claimee: req.user.claimee, claimedStatus: req.user.claimed})
+    res.render('gifts', {userID: req.user._id, user: req.user.username, date: req.user.date, events1: req.user.events1, eventname: req.params.events1, gift: req.user.giftx, giftLink: req.user.giftLinkx, event: req.params.event, claimee: req.user.claimee, claimedStatus: req.user.claimed, creator: req.params.userID, creatorName: req.params.username})
     
 })
+// app.get('/dashboard/:userID/:event', isLoggedIn, (req, res) => {
+//     res.send(req.params)
+// })
+
 // app.get('/dashboarduser/:event', (req, res) => {
 //     res.render('gifts', {event: req.params.event}, (err, event) => {})
 // })

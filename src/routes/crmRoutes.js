@@ -19,6 +19,7 @@ import { addNewContact,
         removeGift,
         getGift,
         getGift2,
+        getGift3,
         getGiftById,
         deleteEventGifts,
         updateGiftClaimee,
@@ -69,17 +70,27 @@ const routes = (app) => {
 
         .delete(deleteEventGifts) // delete many,
 
+    app.route('/dashboard/:userID/:event')
+
+        .get(getGift)
+
     app.route('/dashboarduser/:userID')
 
         .get(getUserByID)
 
         .put(updateUser) //this updates our event list
 
-    app.route('/dashboarduser/:username/:events1') 
+    app.route('/dashboarduser/:username/:userID/:events1') 
 
         .post(addGiftz) // this works
 
         .get(getGift2) // getGift prior
+
+    app.route('/dashboarduser/:user/:userID/:events1') 
+
+        .post(addGiftz) // this works
+
+        .get(getGift3) // getGift prior
 
     app.route('/dashboarduser/:giftID')
 
